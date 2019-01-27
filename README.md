@@ -1,4 +1,12 @@
 # MyProject
+I am a graduate student at Northeastern University who started Northeastern in the ALIGN program. As a participant of the ALIGN program, my previous experience differed from computer science. I worked in the field of organizational development. 
+
+This repository is for web development. 
+
+## LINKS
+HEROKU - https://dashboard.heroku.com/apps
+GITHUB REPO - https://github.com/samuelt1822/My-Git
+ASSIGNMENT INFO - https://onedrive.live.com/view.aspx?resid=5122A5DA1ABBEA0C!916&ithint=file%2cdocx&app=Word&authkey=!AIb_Ry1sX3gmv3
 
 Heroku Test
 
