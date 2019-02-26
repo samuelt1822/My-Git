@@ -1,0 +1,33 @@
+<body>
+<header>
+  <div class="container-fluid" id="profile-gray" style="display: inline-block">
+    <h1 id="profile-header-gray">&nbsp; Widget Edit
+      <a routerLink="/profile/{{userId}}/website/{{websiteId}}/page/{{pageId}}/widget/new">
+        <i class="fas fa-chevron-left fontawsome_icon" id= "back-chevron-gray"></i>
+      </a>
+      <a routerLink="/profile/{{userId}}/website/{{websiteId}}/page/{{pageId}}/widget">
+        <i class="fas fa-check fontawsome_icon" id="check-icon-gray"></i>
+      </a>
+    </h1>
+  </div>
+</header>
+<br />
+<div class="container-fluid">
+  <br />
+  <label>Name</label>
+  <input [(ngModel)]="widget.text" type="text" class="form-control" id="username" placeholder="Name"/>
+  <br/>
+  <label>Size</label>
+  <input [(ngModel)]="widget.size" type="text" class="form-control" placeholder="Description"/>
+  <br/>
+  <a class="btn btn-success btn-block" id="website-edit-button" (click)="this.editWidget(widget)">Update</a>
+  <a class="btn btn-warning btn-block" id="website-delete-button" (click)="this.deleteWidget(widget._id)">Delete</a>
+</div>
+<footer id="gray-footer">
+  <div class="container-fluid">
+    <a routerLink="/profile/{{userId}}">
+      <i class="fas fa-user fontawsome_icon" id="user-blue"></i>
+    </a>
+  </div>
+</footer>
+</body>

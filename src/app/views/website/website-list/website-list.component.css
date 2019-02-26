@@ -1,0 +1,50 @@
+#profile-blue {
+    padding: 10px;
+    display: inline-block;
+    background-color: #428bca;
+}
+#blue-footer {
+    background-color: #428bca;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50px;
+}
+#profile-header {
+    font-size: 1.7em;
+    color: white;
+}
+#bulletLessList {
+    list-style-type: none;
+    color: #428bca;
+}
+#check-icon {
+    float:right;
+    color: white;
+}
+#cog-position {
+    float:right;
+    margin-right: .5em;
+}
+#user-white {
+    float: right;
+    color: white;
+    padding: 15px;
+}
+#back-chevron {
+    float: left;
+    color: white;
+    margin-top:.1em;
+}
+html {
+    position: relative;
+    min-height: 100%;
+}
+.container-fluid:hover {
+    text-decoration: none;
+}
+body {
+    margin: 0;
+    position: relative;
+}

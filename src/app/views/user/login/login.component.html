@@ -1,3 +1,18 @@
-<p>
-  login works!
-</p>
+<h1 id="title">Login</h1>
+<div class="container-fluid">
+  <!--Below renders error message if the password does not match-->
+  <div *ngIf="errorFlag" class="alert alert-danger"> {{errorMsg}} </div>
+  <form (ngSubmit) = "login()" #f="ngForm">
+      <input class="form-control" type="text" name="username" required ngModel
+           #username="ngModel" placeholder="username"/>
+    <!--Below renders message between tag if the username is not valid and the user has clicked on the field.-->
+      <span class="help-block" *ngIf="!username.valid && username.touched"> Username is required. </span>
+      <br/>
+      <input class="form-control" type="text" name="password" required ngModel
+           #password="ngModel" placeholder="password"/>
+      <span class="help-block" *ngIf="!password.valid && password.touched"> Password is required. </span>
+      <br/>
+      <button class="btn btn-primary btn-block" type="submit" [disabled]="!f.valid">Login</button>
+  </form>
+  <a class="btn btn-success btn-block" [routerLink]="['/register']">Register</a>
+</div>

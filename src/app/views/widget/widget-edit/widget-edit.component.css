@@ -1,0 +1,107 @@
+#profile-blue {
+    padding: 10px;
+    display: inline-block;
+    background-color: #428bca;
+}
+#profile-gray {
+    padding: 10px;
+    display: inline-block;
+    background-color: #DDDDDD;
+}
+#blue-footer {
+    background-color: #428bca;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50px;
+}
+#gray-footer {
+    background-color: #DDDDDD;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50px;
+}
+#profile-header {
+    font-size: 1.7em;
+    color: white;
+}
+#register-header {
+    margin-left:1.5em;
+}
+#profile-header-gray {
+    font-size: 1.7em;
+    color: #696969
+}
+#bulletLessList {
+    list-style-type: none;
+    color: #428bca;
+}
+#check-icon {
+    float:right;
+    color: white;
+}
+#check-icon-gray {
+    float:right;
+    color: dimgray;
+}
+#cog-position {
+    float:right;
+}
+#cog-position2 {
+    float:right;
+}
+#cog-position3 {
+    float:right;
+}
+#cog-position4 {
+    float:right;
+}
+#cog-position5 {
+    float:right;
+}
+li {
+    margin-bottom: 10px;
+}
+li:last-child{
+    margin-bottom: 0px;
+}
+#user-footer {
+    float: right;
+    color: white;
+    margin-bottom: 5px;
+    padding: 50px;
+}
+#user-white {
+    float: right;
+    color: white;
+    padding: 15px;
+}
+#user-blue {
+    float: right;
+    color: dodgerblue;
+    padding: 15px;
+}
+#back-chevron {
+    float: left;
+    color: white;
+}
+#back-chevron-gray {
+    float: left;
+    color: dimgray;
+}
+#title {
+    margin-left:1.5em;
+}
+html {
+    position: relative;
+    min-height: 100%;
+}
+.body-wrapper {
+    margin-bottom:100px;
+}
+.container-fluid:hover {
+    text-decoration: none;
+}

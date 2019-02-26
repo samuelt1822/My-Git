@@ -1,0 +1,47 @@
+#profile-gray {
+    padding: 10px;
+    display: inline-block;
+    background-color: #DDDDDD;
+}
+#profile-header-gray {
+    font-size: 1.7em;
+    color: dimgray;
+}
+#back-chevron-gray {
+    float: left;
+    color: dimgray;
+}
+#check-icon-gray {
+    float:right;
+    color: dimgray;
+}
+.container-fluid:hover {
+    text-decoration: none;
+}
+#user-blue {
+    float: right;
+    color: dodgerblue;
+    padding: 15px;
+}
+#website-edit-button {
+    color: white;
+}
+#website-delete-button {
+    color: white;
+}
+#gray-footer {
+    background-color: #DDDDDD;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50px;
+}
+html {
+    position: relative;
+    min-height: 100%;
+}
+.body-wrapper {
+    margin-bottom:100px;
+}
+

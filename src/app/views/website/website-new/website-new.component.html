@@ -1,0 +1,35 @@
+<header>
+  <div class="container-fluid" id="profile-blue" style="display: inline-block">
+    <h1 id="profile-header">&nbsp;&nbsp; New Website
+      <a routerLink="/profile/{{userId}}/website">
+        <i class="fas fa-chevron-left fontawsome_icon" id= "back-chevron"></i>
+      </a>
+      <a routerLink="/profile/{{userId}}/website">
+        <i class="fas fa-check fontawsome_icon" id="check-icon"></i>
+      </a>
+    </h1>
+  </div>
+</header>
+<br/>
+<div class="container-fluid">
+  <div *ngIf="errorFlag" class="alert alert-success"> {{successMsg}} </div>
+  <form (ngSubmit) = "addWebsite()" #f="ngForm">
+    <label>Website Name</label>
+    <input type="text" class="form-control" required [(ngModel)]="website.name" name="name"
+           id="nameInput" placeholder="Name">
+    <br/>
+    <label>Website Description</label>
+    <textarea class="form-control" id="TextArea" required ngModel #description="ngModel"
+              name="description" [(ngModel)]="website.description" placeholder="Description" rows="3"></textarea>
+    <br/>
+    <a class="btn btn-success btn-block" id="addWebsite-button" (click)="addWebsite()">Add</a>
+    <a class="btn btn-primary btn-block" routerLink="/profile/{{userId}}/website">Websites</a>
+  </form>
+</div>
+<footer id="blue-footer">
+  <div class="container-fluid">
+    <a routerLink="/profile/{{userId}}">
+      <i class="fas fa-user fontawsome_icon" id="user-white"></i>
+    </a>
+  </div>
+</footer>

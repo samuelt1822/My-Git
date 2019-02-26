@@ -1,0 +1,33 @@
+<body>
+<header>
+  <div class="container-fluid" id="profile-gray">
+    <h1 id="profile-header-gray">&nbsp;&nbsp; Pages
+      <a routerLink="/profile/{{userId}}/website">
+        <i class="fas fa-chevron-left fontawsome_icon" id="back-chevron-gray"></i>
+      </a>
+     <a routerLink="/profile/{{userId}}/website/{{websiteId}}/page/new">
+        <i class="fas fa-plus fontawsome_icon" id="check-icon-gray"></i>
+      </a>
+    </h1>
+  </div>
+</header>
+<br/>
+<ul id="bulletLessList">
+  <li *ngFor = "let page of pages">
+    <a routerLink="/profile/{{userId}}/website/{{websiteId}}/page/{{page._id}}/widget">
+      {{page.name}}
+    </a>
+    <a routerLink="/profile/{{userId}}/website/{{page.websiteId}}/page/{{page._id}}">
+      <i class="fas fa-cog fontawsome_icon" id="cog-position"></i>
+    </a>
+  </li>
+</ul>
+<br/>
+<footer id="gray-footer">
+  <div class="container-fluid">
+    <a routerLink="/profile/{{userId}}">
+      <i class="fas fa-user fontawsome_icon" id="user-blue"></i>
+    </a>
+  </div>
+</footer>
+</body>

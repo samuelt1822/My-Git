@@ -1,0 +1,15 @@
+#register-header {
+    margin-left:.4em;
+    color: dimgray;
+}
+#register-button {
+    color: white;
+}
+#cancel-button {
+    color: white;
+}
+html {
+    position: relative;
+    min-height: 100%;
+}
+

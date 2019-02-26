@@ -1,0 +1,66 @@
+<body>
+<header>
+  <div class="container-fluid" id="profile-gray">
+    <h1 id="profile-header-gray">&nbsp;&nbsp; Widgets
+      <a routerLink="/profile/{{userId}}/website/{{websiteId}}/page">
+        <i class="fas fa-chevron-left fontawsome_icon" id="back-chevron-gray"></i>
+      </a>
+      <a routerLink="/profile/{{userId}}/website/{{websiteId}}/page/{{pageId}}/widget/new">
+        <i class="fas fa-plus fontawsome_icon" id="check-icon-gray"></i>
+      </a>
+    </h1>
+  </div>
+</header>
+<br/>
+  <div *ngFor = "let widget of widgets" id="widget-height">
+    <div [ngSwitch]="widget.widgetType">
+      <div *ngSwitchCase="'HEADING'">
+        <div class="container">
+          {{widget.text}}
+          <div class="top-right-position">
+            <a routerLink="/profile/{{userId}}/website/{{websiteId}}/page/{{pageId}}/widget/{{widget._id}}">
+              <i class="fas fa-cog fontawsome_icon"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div *ngSwitchCase="'IMAGE'">
+        <div class="container">
+          <img width="560" height="315" alt="widget" [src]="widget.url" />
+          <div class="top-right-position">
+            <a routerLink="/profile/{{userId}}/website/{{websiteId}}/page/{{pageId}}/widget/{{widget._id}}">
+              <i class="fas fa-cog fontawsome_icon"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div *ngSwitchCase="'HTML'">
+        <div class="container">
+        {{widget.text}}
+          <div class="top-right-position">
+            <a routerLink="/profile/{{userId}}/website/{{websiteId}}/page/{{pageId}}/widget/{{widget._id}}">
+              <i class="fas fa-cog fontawsome_icon"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div *ngSwitchCase="'YOUTUBE'">
+        <div class="container">
+          <iframe width="560" height="315" [src]="widget.url | safe" frameborder="0" allowfullscreen></iframe>
+          <div class="top-right-position">
+            <a routerLink="/profile/{{userId}}/website/{{websiteId}}/page/{{pageId}}/widget/{{widget._id}}">
+              <i class="fas fa-cog fontawsome_icon"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<footer id="gray-footer">
+  <div class="container-fluid">
+    <a routerLink="/profile/{{userId}}">
+      <i class="fas fa-user fontawsome_icon" id="user-blue"></i>
+    </a>
+  </div>
+</footer>
+</body>

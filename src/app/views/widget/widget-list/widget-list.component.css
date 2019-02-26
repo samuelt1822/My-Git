@@ -1,0 +1,66 @@
+
+#profile-gray {
+    padding: 10px;
+    display: inline-block;
+    background-color: #DDDDDD;
+}
+#profile-header-gray {
+    font-size: 1.7em;
+    color: #696969
+}
+#back-chevron-gray {
+    float: left;
+    color: dimgray;
+}
+#widget-height {
+    margin-bottom: 75px;
+}
+.container {
+    position: relative;
+}
+.top-right-position {
+    position: absolute;
+    top: 0px;
+    right: -35px;
+    background-color: whitesmoke;
+    background-size: 100px 100px;
+}
+#check-icon-gray {
+    float:right;
+    color: dimgray;
+}
+#check-icon-gray2 {
+    float:right;
+    color: dimgray;
+}
+#check-icon-gray3 {
+    float:right;
+    color: dimgray;
+}
+#check-icon-gray4 {
+    float:right;
+    color: dimgray;
+}
+#check-icon-gray5 {
+    float:right;
+    color: dimgray;
+}
+#gray-footer {
+    background-color: #DDDDDD;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50px;
+}
+#user-blue {
+    float: right;
+    color: dodgerblue;
+    padding: 15px;
+}
+.container-fluid:hover {
+    text-decoration: none;
+}
+.image {
+    position: relative;
+}

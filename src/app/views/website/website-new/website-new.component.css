@@ -1,0 +1,43 @@
+#profile-blue {
+    padding: 10px;
+    display: inline-block;
+    background-color: #428bca;
+}
+#profile-header {
+    font-size: 1.7em;
+    color: white;
+}
+#back-chevron {
+    float: left;
+    color: white;
+}
+#check-icon {
+    float:right;
+    color: white;
+}
+.container-fluid:hover {
+    text-decoration: none;
+}
+#addWebsite-button {
+    color: white;
+}
+#blue-footer {
+    background-color: #428bca;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50px;
+}
+#user-white {
+    float: right;
+    color: white;
+    padding: 15px;
+}
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+
+

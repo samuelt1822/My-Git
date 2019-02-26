@@ -1,0 +1,34 @@
+<body>
+<header>
+  <div class="container-fluid" id="profile-blue">
+    <h1 id="profile-header">&nbsp;&nbsp; Edit Website
+      <a [routerLink]="['/profile', website.developerId, 'website']">
+        <i class="fas fa-chevron-left fontawsome_icon" id= "back-chevron"></i>
+      </a>
+      <a [routerLink]="['/profile', website.developerId, 'website']">
+        <i class="fas fa-check fontawsome_icon" id="check-icon"></i>
+      </a>
+    </h1>
+  </div>
+</header>
+<br />
+<div class="container-fluid">
+  <br />
+  <label>Website Name</label>
+  <input [(ngModel)]="website.name" type="text" class="form-control" id="username" placeholder="Name"/>
+  <br/>
+  <label>Website Description</label>
+  <textarea class="form-control" id="TextArea" required ngModel #description="ngModel"
+            name="description" [(ngModel)]="website.description" placeholder="Description" rows="3"></textarea>
+  <br/>
+  <a class="btn btn-success btn-block" id="website-edit-button" (click)="this.editWebsite(website)">Update</a>
+  <a class="btn btn-warning btn-block" id="website-delete-button" (click)="this.deleteWebsite(website._id)">Delete</a>
+</div>
+<footer id="blue-footer">
+  <div class="container-fluid">
+    <a routerLink="/profile/{{website.developerId}}">
+      <i class="fas fa-user fontawsome_icon" id="user-white"></i>
+    </a>
+  </div>
+</footer>
+</body>
