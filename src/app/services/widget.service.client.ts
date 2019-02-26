@@ -12,7 +12,7 @@ export class WidgetServiceClient {
             'business with a bang in January of 2018, when it imported about $41 million worth of gold from Venezuela, the first such ' +
             'transaction between the two countries in records that go back 50 years. The next month its volume more than doubled.'),
         new Widget('2', 'HEADING', '2'),
-        new Widget('3', 'IMAGE', '3', '2', 'text', '100%', 'http://lorempixel.com/400/200/'),
+        new Widget('3', 'IMAGE', '3', '2', 'text', '100%', 'https://lorempixel.com/400/200/'),
         new Widget('4', 'IMAGE', '4', '2', 'text', '100%',
             'https://www.kalw.org/sites/kalw/files/styles/medium/public/201601/Nature-Brain.jpg'),
         new Widget('5', 'YOUTUBE', '3', '2', 'text', '100%', 'https://www.youtube.com/embed/x_CrVERam8c'),
