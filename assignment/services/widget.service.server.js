@@ -10,7 +10,7 @@ module.exports = function (app) {
     app.delete("/api/widget/:widgetId", deleteWidget);
     app.put("/api/page/:pageId/widget", resortWidget);
     app.post("/api/upload",upload.single('myFile'),uploadImage);
-    //app.post("/api/upload", uploadImage); option for using diskStorage 
+    //app.post("/api/upload", uploadImage);
 
 
     const widgets = [
