@@ -1,7 +1,7 @@
 <h1 id="register-header">Register</h1>
 <div class="container-fluid">
   <div *ngIf="errorFlag" class="alert alert-danger"> {{errorMsg}}</div>
-  <form (ngSubmit) = "register(v_password)" #f="ngForm">
+  <form (ngSubmit) = "register()" #f="ngForm">
 
     <input type="text" class="form-control" required [(ngModel)]="user.username" name="username" #username="ngModel"
            id="usernameInput" placeholder="username">
@@ -15,7 +15,7 @@
            id="passwordInput2" placeholder="verify password">
   <br/>
 
-    <a class="btn btn-primary btn-block" id="register-button" (click)="register(v_password)">Register</a>
+    <a class="btn btn-primary btn-block" id="register-button" (click)="register()">Register</a>
     <a class="btn btn-warning btn-block" id="cancel-button" [routerLink]="['/login']">Cancel</a>
   </form>
 </div>

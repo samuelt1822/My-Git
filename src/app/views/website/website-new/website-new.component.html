@@ -13,7 +13,7 @@
 <br/>
 <div class="container-fluid">
   <div *ngIf="errorFlag" class="alert alert-success"> {{successMsg}} </div>
-  <form (ngSubmit) = "addWebsite()" #f="ngForm">
+  <!--<form (ngSubmit) = "addWebsite()" #f="ngForm">-->
     <label>Website Name</label>
     <!--<input type="text" class="form-control" required [(ngModel)]="website.name" name="name"
            id="nameInput" placeholder="Name">-->
@@ -28,7 +28,6 @@
     <br/>
     <a class="btn btn-success btn-block" id="addWebsite-button" (click)="create()">Add</a>
     <a class="btn btn-primary btn-block" routerLink="/profile/{{userId}}/website">Websites</a>
-  </form>
 </div>
 <footer id="blue-footer">
   <div class="container-fluid">
