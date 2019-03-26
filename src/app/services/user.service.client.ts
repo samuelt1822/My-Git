@@ -1,42 +1,40 @@
 import {Injectable} from '@angular/core';
 import {User} from '../models/user.model.client';
+import {HttpClient} from '@angular/common/http';
+import {environment} from '../../environments/environment';
+import 'rxjs-compat/add/operator/map';
+import {Observable} from 'rxjs';
 
 
 @Injectable()
 
 
 export class UserServiceClient {
-    constructor() {}
+    constructor(private http: HttpClient) {}
 
-    users: User[] = [
-        new User ('123', 'alice', 'pass1', 'Alice', 'Wonder', 'alice@gmail.com'),
-        new User ('234', 'bob', 'pass2', 'Bob', 'Marley', 'bob@gmail.com'),
-        new User ('345', 'charlie', 'pass3', 'Charlie', 'Moore', 'charlie@gmail.com'),
-        new User ('456', 'jannuzi', 'pass4', 'Jannuzi', 'Saunders', 'jannuzi@gmail.com')];
+    baseUrl = environment.baseUrl;
 
-    /** Add delete function */
     createUser(user: User) {
-        const id = Math.floor(Math.random() * 1000);
-        user._id = id.toString();
-        this.users.push(new User(user._id, user.username, user.password, user.firstName, user.lastName, user.email));
-        return user;
+        const body = {_id: '', username: user.username, password: user.password };
+        return this.http.post(this.baseUrl + '/api/user', body);
     }
     findUserById(userId: String) {
-        return this.users.find( function (user) {
-            return user._id === userId;
-        });
+        return this.http.get(this.baseUrl + '/api/user/' + userId);
     }
-    findUserByCredential(username: String, password: String) {
-        return this.users.find( function (user) {
-            return user.username === username && user.password === password;
-        });
+    findUserByUsername(username: String) {
+        return this.http.get(this.baseUrl + '/api/username?username=' + username);
     }
-    updateUser(user: User) {
-        for (let i = 0; i < this.users.length; i++) {
-            if (this.users[i]._id === user._id) {
-                return this.users[i] = user;
-            }
-        }
+    updateUser(user: any) {
+        return this.http.put(this.baseUrl + '/api/user/' + user._id, user);
     }
+
+    findUserByCredentials(username: String, password: String) {
+        return this.http.get(this.baseUrl + '/api/user?username=' + username + '&password=' + password);
+    }
+
+    deleteUserById(userId: String) {
+        return this.http.delete(this.baseUrl + '/api/user' + userId);
+    }
+
 }
 

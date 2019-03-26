@@ -29,6 +29,9 @@ const routes: Routes = [
     {path: 'profile/:uid/website/:wid/page/:pid/widget', component: WidgetListComponent},
     {path: 'profile/:uid/website/:wid/page/:pid/widget/new', component: WidgetChooserComponent},
     {path: 'profile/:uid/website/:wid/page/:pid/widget/:wgid', component: WidgetEditComponent},
+    {path: 'profile/:uid/website/:wid/page/:pid/widget/:wgid/:header', component: WidgetHeaderComponent},
+    {path: 'profile/:uid/website/:wid/page/:pid/widget/:wgid/:image', component: WidgetImageComponent},
+    {path: 'profile/:uid/website/:wid/page/:pid/widget/:wgid/:youtube', component: WidgetYoutubeComponent}
 
     ];
 

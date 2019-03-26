@@ -15,37 +15,33 @@ export class WebsiteNewComponent implements OnInit {
   userId: String;
   errorFlag: boolean;
   successMsg = 'Your website has been added. You may add another or select Websites to return to your website list.';
-  websites = [{}];
+  websites: Website[];
   constructor(private websiteService: WebsiteServiceClient, private router: Router, private activatedRouter: ActivatedRoute) {
-    this.website = new Website();
+    /**this.website = new Website();*/
     console.log(this.website);
   }
-  addWebsite() {
-    this.website.name = this.addWebsiteForm.value.name;
-    console.log(this.website.name);
-    this.website.description = this.addWebsiteForm.value.description;
-    console.log(this.website.description);
-    this.website.developerId = this.userId;
-    console.log(this.website.developerId);
-    this.websites = this.websiteService.createWebsite(this.userId, this.website);
-    console.log(this.website);
-    console.log(this.websites);
-    if (this.website) {
-      this.errorFlag = true;
-      /**this.router.navigate(['profile/', this.userId, '/website']);*/
-    } else {
-      this.errorFlag = false;
-    }
+
+  create() {
+    this.website = new Website(this.website._id, this.website.name, this.userId, this.website.description);
+    this.websiteService.createWebsite(this.userId, this.website).subscribe(
+        (data: any) => {
+          const url = '/profile/' + this.userId + '/website';
+          this.router.navigateByUrl(url);
+          this.websiteService.findWebsitesByUser(this.userId).subscribe((websites: any) => {
+            this.websites = websites;
+          });
+        }
+    );
 
   }
 
   ngOnInit() {
-    this.activatedRouter.params.subscribe(
-        (params: any) => {
-          this.userId = params['uid'];
-        }
-    );
-    console.log(this.userId);
-  }
+    this.activatedRouter.params.subscribe((params: any) => {this.userId = params.uid; });
+      this.websiteService.findWebsitesByUser(this.userId).subscribe((data: any) => {
+        this.websites = data;
+      });
+      this.website = new Website();
+      console.log(this.website.developerId);
 
+}
 }

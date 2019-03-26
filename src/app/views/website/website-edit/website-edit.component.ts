@@ -9,29 +9,53 @@ import {ActivatedRoute, Router} from '@angular/router';
   styleUrls: ['./website-edit.component.css']
 })
 export class WebsiteEditComponent implements OnInit {
+  userId: String;
+  websiteId: String;
   website: Website;
-  websites = [{}];
-  constructor(private websiteService: WebsiteServiceClient, private router: Router, private activatedRouter: ActivatedRoute) { }
+  currentWeb = {};
+  websites = [];
+  constructor(private websiteService: WebsiteServiceClient, private link: Router, private activatedRouter: ActivatedRoute) { }
 
-  editWebsite(website) {
-    console.log(website);
-    this.website = this.websiteService.updateWebsite(this.website._id, website);
-    if (this.website) {
-      this.router.navigate(['/profile', this.website.developerId, 'website']);
-    }
+  delete() {
+    this.websiteService.deleteWebsite(this.websiteId).subscribe(
+        (data: any) => {
+          this.websites = data;
+          console.log(this.websites);
+          const url = '/profile/' + this.userId + '/website';
+          console.log(url);
+          this.link.navigateByUrl(url);
+        }
+    );
   }
-  deleteWebsite() {
-    console.log(this.websites);
-    this.websites = this.websiteService.deleteWebsiteById(this.website._id);
-    console.log(this.websites);
-    if (this.websites) {
-      this.router.navigate(['/profile', this.website.developerId, 'website']);
-    }
+  update() {
+    this.websiteService.updateWebsite(this.websiteId, this.currentWeb).subscribe(
+        (data: any) => {
+          const url = '/profile/' + this.userId + '/website';
+          this.link.navigateByUrl(url);
+        }
+    );
+  }
+  findWebByWebId(currentWebId: String) {
+    console.log('currentWebId is :' + currentWebId);
+    this.websiteService.findWebsiteById(currentWebId).subscribe(
+        (data: any) => {
+          this.currentWeb = data;
+          const  url = '/user/' + this.userId + '/website/' + this.currentWeb['_id'];
+          this.link.navigateByUrl(url);
+        }
+    );
   }
 
   ngOnInit() {
-    this.activatedRouter.params.subscribe(params => {
-      this.website = this.websiteService.findWebsitesById(params['wid']);
+    this.activatedRouter.params.subscribe((params: any) => { this.userId = params.uid;
+      this.websiteId = params.wid; });
+    console.log('webId' + this.websiteId);
+
+    this.websiteService.findWebsiteById(this.websiteId).subscribe((data: any) => {
+      this.currentWeb = data;
+    });
+    this.websiteService.findWebsitesByUser(this.userId).subscribe((data: any) => {
+      this.websites = data;
     });
   }
 }

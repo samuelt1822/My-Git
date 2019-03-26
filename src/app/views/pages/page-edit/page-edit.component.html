@@ -15,14 +15,15 @@
 <div class="container-fluid">
   <br />
   <label>Page Name</label>
-  <input [(ngModel)]="page.name" type="text" class="form-control" id="username" placeholder="Name"/>
+  <input [(ngModel)]="currentPage['name']" [ngModelOptions]="{standalone: true}"
+         type="text" class="form-control" id="page-name" placeholder="Page Name">
   <br/>
   <label>Page Description</label>
-  <textarea class="form-control" id="TextArea" required ngModel #description="ngModel"
-            name="description" [(ngModel)]="page.description" placeholder="Description" rows="3"></textarea>
+  <input [(ngModel)]="currentPage['description']" [ngModelOptions]="{standalone: true}"
+         type="text" class="form-control" id="page-title" placeholder="Page Title">
   <br/>
-  <a class="btn btn-success btn-block" id="website-edit-button" (click)="this.editPage(page)">Update</a>
-  <a class="btn btn-warning btn-block" id="website-delete-button" (click)="this.deletePage(page._id)">Delete</a>
+  <a class="btn btn-success btn-block" id="website-edit-button" (click)="this.update()">Update</a>
+  <a class="btn btn-warning btn-block" id="website-delete-button" (click)="this.delete()">Delete</a>
 </div>
 
 <footer id="gray-footer">

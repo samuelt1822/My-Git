@@ -14,9 +14,10 @@ import {PageServiceClient} from '../../../services/page.service.client';
 export class PageNewComponent implements OnInit {
   @ViewChild('f') addPageForm: NgForm;
   page: Page;
-  pages = [{}];
+  pages = [];
   userId: String;
   websiteId: String;
+  currentPage: Page;
   errorFlag: boolean;
   successMsg = 'Your page has been added. You may add another or select Pages to return to your page list.';
 
@@ -24,22 +25,15 @@ export class PageNewComponent implements OnInit {
     this.page = new Page;
     console.log(this.page);
   }
-  addPage() {
-    this.page.name = this.addPageForm.value.name;
-    console.log(this.page.name);
-    this.page.description = this.addPageForm.value.description;
-    console.log(this.page.description);
-    this.page.websiteId = this.websiteId;
-    console.log(this.websiteId);
-    this.pages = this.pageService.createPage(this.websiteId, this.page);
-    console.log(this.page);
-    console.log(this.pages);
-    if (this.page) {
-      this.errorFlag = true;
-    } else {
-      this.errorFlag = false;
+    create() {
+        this.pageService.createPage(this.websiteId, this.currentPage).subscribe(
+            (data: any) => {
+                this.pages = data;
+                const url = '/profile/' + this.userId + '/website/' + this.websiteId + '/page';
+                this.router.navigateByUrl(url);
+            }
+        );
     }
-  }
 
   ngOnInit() {
       this.activatedRouter.params.subscribe(
@@ -50,6 +44,7 @@ export class PageNewComponent implements OnInit {
       );
       console.log(this.userId);
       console.log(this.websiteId);
+      this.currentPage = new Page();
   }
 }
 

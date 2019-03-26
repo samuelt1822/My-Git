@@ -13,16 +13,17 @@
 <br/>
 <div class="container-fluid">
   <div *ngIf="errorFlag" class="alert alert-success"> {{successMsg}} </div>
-  <form (ngSubmit) = "addPage()" #f="ngForm">
+  <form> <!--(ngSubmit) = "addPage()" #f="ngForm"-->
     <label>Page Name</label>
-    <input type="text" class="form-control" required [(ngModel)]="page.name" name="name"
-           id="nameInput" placeholder="Name">
+    <input [(ngModel)] = "currentPage.name" [ngModelOptions]="{standalone: true}" type="text"
+           class="form-control" id="page-name" placeholder="Page Name">
+
     <br/>
     <label>Page Description</label>
-    <textarea class="form-control" id="TextArea" required ngModel #description="ngModel"
-              name="description" [(ngModel)]="page.description" placeholder="Description" rows="3"></textarea>
+    <input [(ngModel)] = "currentPage.description" [ngModelOptions]="{standalone: true}" type="text"
+           class="form-control" id="page-title" placeholder="Page Description">
     <br/>
-    <a class="btn btn-success btn-block" id="addPage-button" (click)="addPage()">Add</a>
+    <a class="btn btn-success btn-block" id="addPage-button" (click)="create()">Add</a>
     <a class="btn btn-primary btn-block" routerLink="/profile/{{userId}}/website/{{websiteId}}/page">Pages</a>
   </form>
 </div>

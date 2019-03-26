@@ -12,22 +12,36 @@
   </div>
 </header>
 <br />
-<div class="container-fluid">
-  <br />
-  <label>Name</label>
-  <input [(ngModel)]="widget.text" type="text" class="form-control" id="username" placeholder="Name"/>
-  <br/>
-  <label>URL</label>
-  <input [(ngModel)]="widget.url" type="text" class="form-control" placeholder="URL"/>
-  <br/>
-  <label>Size</label>
-  <input [(ngModel)]="widget.size" type="text" class="form-control" placeholder="Size"/>
-  <br/>
-  <label>Width</label>
-  <input [(ngModel)]="widget.width" type="text" class="form-control" placeholder="Width"/>
-  <br/>
-  <a class="btn btn-success btn-block" id="website-edit-button" (click)="this.editWidget(widget)">Update</a>
-  <a class="btn btn-warning btn-block" id="website-delete-button" (click)="this.deleteWidget(widget._id)">Delete</a>
+
+<div class="container">
+  <form>
+    <div class="form-group">
+      <label for="youtube-name">Name</label>
+      <input [(ngModel)]="widget['name']"
+             [ngModelOptions]="{standalone: true}"
+             type="text" class="form-control" id="youtube-name" placeholder="Name">
+    </div>
+    <div class="form-group">
+      <label for="youtube-text">Text</label>
+      <input [(ngModel)]="widget['text']"
+             [ngModelOptions]="{standalone: true}"
+             type="text" class="form-control" id="youtube-text" placeholder="Text">
+    </div>
+    <div class="form-group">
+      <label for="youtube-URL">URL</label>
+      <input [(ngModel)]="widget['url']"
+             [ngModelOptions]="{standalone: true}"
+             type="text" class="form-control" id="youtube-URL" placeholder="URL">
+    </div>
+    <div class="form-group">
+      <label for="youtube-width">Width</label>
+      <input [(ngModel)]="widget['width']"
+             [ngModelOptions]="{standalone: true}"
+             type="text" class="form-control" id="youtube-width" placeholder="100%">
+    </div>
+  </form>
+  <a (click)="update()" class="btn btn-success btn-block" id="website-edit-button">Update</a>
+  <a (click)="delete()" class="btn btn-warning btn-block" id="website-delete-button">Delete</a>
 </div>
 <footer id="gray-footer">
   <div class="container-fluid">

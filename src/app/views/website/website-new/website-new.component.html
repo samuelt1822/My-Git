@@ -15,14 +15,18 @@
   <div *ngIf="errorFlag" class="alert alert-success"> {{successMsg}} </div>
   <form (ngSubmit) = "addWebsite()" #f="ngForm">
     <label>Website Name</label>
-    <input type="text" class="form-control" required [(ngModel)]="website.name" name="name"
-           id="nameInput" placeholder="Name">
+    <!--<input type="text" class="form-control" required [(ngModel)]="website.name" name="name"
+           id="nameInput" placeholder="Name">-->
+    <input [(ngModel)] = "website['name']" [ngModelOptions]="{standalone: true}" type="text" class="form-control"
+           id="website-name" placeholder="Name">
     <br/>
     <label>Website Description</label>
-    <textarea class="form-control" id="TextArea" required ngModel #description="ngModel"
-              name="description" [(ngModel)]="website.description" placeholder="Description" rows="3"></textarea>
+    <!--<textarea class="form-control" id="TextArea" required ngModel #description="ngModel"
+              name="description" [(ngModel)]="website.description" placeholder="Description" rows="3"></textarea>-->
+    <textarea [(ngModel)] = "website['description']" [ngModelOptions]="{standalone: true}" id="website-description"
+              class="form-control" rows="5" placeholder="Description"></textarea>
     <br/>
-    <a class="btn btn-success btn-block" id="addWebsite-button" (click)="addWebsite()">Add</a>
+    <a class="btn btn-success btn-block" id="addWebsite-button" (click)="create()">Add</a>
     <a class="btn btn-primary btn-block" routerLink="/profile/{{userId}}/website">Websites</a>
   </form>
 </div>
@@ -33,3 +37,5 @@
     </a>
   </div>
 </footer>
+
+

@@ -25,6 +25,11 @@
     background-color: whitesmoke;
     background-size: 100px 100px;
 }
+#image-format {
+    position:absolute;
+    right:10px;
+    top:10px;
+}
 #check-icon-gray {
     float:right;
     color: dimgray;
@@ -60,7 +65,4 @@
 }
 .container-fluid:hover {
     text-decoration: none;
-}
-.image {
-    position: relative;
 }

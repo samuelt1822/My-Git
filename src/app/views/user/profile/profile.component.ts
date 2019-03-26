@@ -1,8 +1,10 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import { UserServiceClient } from '../../../services/user.service.client';
 import {User} from '../../../models/user.model.client';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
+import {NgForm} from '@angular/forms';
 import 'rxjs';
+import {SharedService} from '../../../services/shared.service';
 
 @Component({
   selector: 'app-profile',
@@ -10,17 +12,48 @@ import 'rxjs';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-  user: User;
-  constructor(private userService: UserServiceClient, private activatedRoute: ActivatedRoute) { }
+  user = {};
+  /**all below added for A4*/
+  username: String;
+  firstName: String;
+  lastName: String;
+  email: String;
+  user2 = {};
+  userId: String;
+  errorFlag: boolean;
+  errorMsg = 'Invalid username or password.';
+  constructor(private userService: UserServiceClient, private activatedRoute: ActivatedRoute,
+              private router: Router) { }
 
-  updateUser(user) {
-    console.log(user);
-    this.user = this.userService.updateUser(user);
+  updateUser() {
+      this.userService.updateUser(this.user).subscribe(
+          (data: any) => {
+              this.user = data;
+              console.log(this.user);
+          },
+          (error: any) => {
+              alert('update failed!');
+          }
+      );
   }
 
+    deleteUser(deleteUser) {
+        return this.userService.deleteUserById(deleteUser._id).subscribe(
+            () => this.router.navigate(['/login'])
+        );
+    }
+    /** Maintaining this function in case more functionality is added to logout.
+    logout() {
+        this.router.navigate(['/login']);
+    }*/
   ngOnInit() {
-    this.activatedRoute.params.subscribe(params => {
-              this.user = this.userService.findUserById(params['uid']);
-            });
+      this.activatedRoute.params.subscribe((params: any) => {this.userId = params.uid; });
+      console.log(this.userId);
+      this.userService.findUserById(this.userId)
+          .subscribe((data: any) => {
+              console.log(data);
+              this.user = data;
+          });
   }
 }
+

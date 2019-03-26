@@ -12,50 +12,50 @@
   </div>
 </header>
 <br/>
-  <div *ngFor = "let widget of widgets" id="widget-height">
-    <div [ngSwitch]="widget.widgetType">
-      <div *ngSwitchCase="'HEADING'">
-        <div class="container">
-          {{widget.text}}
-          <div class="top-right-position">
-            <a routerLink="/profile/{{userId}}/website/{{websiteId}}/page/{{pageId}}/widget/{{widget._id}}">
+<div class="container cl-container-padding">
+  <div class="widget-list" appSortable (newIndexes)="sortWidget($event)">
+    <div *ngFor="let widget of widgets">
+      <div [ngSwitch]="widget['widgetType']">
+        <div class="float-right">
+          <div class="widget-cog-edit">
+            <a routerLink="/profile/{{userId}}/website/{{websiteId}}/page/{{pageId}}/widget/{{widget['_id']}}">
               <i class="fas fa-cog fontawsome_icon"></i>
             </a>
           </div>
         </div>
-      </div>
-      <div *ngSwitchCase="'IMAGE'">
-        <div class="container">
-          <img width="560" height="315" alt="widget" [src]="widget.url" />
-          <div class="top-right-position">
-            <a routerLink="/profile/{{userId}}/website/{{websiteId}}/page/{{pageId}}/widget/{{widget._id}}">
-              <i class="fas fa-cog fontawsome_icon"></i>
-            </a>
+        <div *ngSwitchCase="'HEADING'">
+          <div [ngSwitch]="widget.size">
+            <div *ngSwitchCase="1">
+              <h1>{{widget.text}}</h1>
+            </div>
+            <div *ngSwitchCase="2">
+              <h2>{{widget.text}}</h2>
+            </div>
+            <div *ngSwitchCase="3">
+              <h3>{{widget.text}}</h3>
+            </div>
+            <div *ngSwitchCase="4">
+              <h4>{{widget.text}}</h4>
+            </div>
+            <div *ngSwitchCase="5">
+              <h5>{{widget.text}}</h5>
+            </div>
+            <div *ngSwitchCase="6">
+              <h6>{{widget.text}}</h6>
+            </div>
           </div>
         </div>
-      </div>
-      <div *ngSwitchCase="'HTML'">
-        <div class="container">
-        {{widget.text}}
-          <div class="top-right-position">
-            <a routerLink="/profile/{{userId}}/website/{{websiteId}}/page/{{pageId}}/widget/{{widget._id}}">
-              <i class="fas fa-cog fontawsome_icon"></i>
-            </a>
-          </div>
+        <div *ngSwitchCase="'IMAGE'">
+          <img  style="width: 540px; height: 360px;" [src]="widget.url">
         </div>
-      </div>
-      <div *ngSwitchCase="'YOUTUBE'">
-        <div class="container">
-          <iframe width="560" height="315" [src]="widget.url | safe" frameborder="0" allowfullscreen></iframe>
-          <div class="top-right-position">
-            <a routerLink="/profile/{{userId}}/website/{{websiteId}}/page/{{pageId}}/widget/{{widget._id}}">
-              <i class="fas fa-cog fontawsome_icon"></i>
-            </a>
-          </div>
+        <div *ngSwitchCase="'YOUTUBE'" >
+          <object style="width: 540px; height: 360px; float: none; clear: both; margin: 2px auto;" [data]="getUrl(widget)"></object>
         </div>
+        <p *ngSwitchDefault><br></p>
       </div>
     </div>
   </div>
+</div>
 <footer id="gray-footer">
   <div class="container-fluid">
     <a routerLink="/profile/{{userId}}">

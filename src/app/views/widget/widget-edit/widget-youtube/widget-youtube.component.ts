@@ -9,37 +9,48 @@ import {ActivatedRoute, Router} from '@angular/router';
   styleUrls: ['./widget-youtube.component.css']
 })
 export class WidgetYoutubeComponent implements OnInit {
+
+  widget = {};
+  widgetList = [];
   userId: String;
   websiteId: String;
   pageId: String;
-  widget: Widget;
-  widgets = [{}];
+  widgetId: String;
 
   constructor(private widgetService: WidgetServiceClient, private router: Router, private activatedRouter: ActivatedRoute) { }
-  editWidget(widget) {
-    console.log(widget);
-    this.widget = this.widgetService.updateWidget(this.widget._id, widget);
-    console.log(this.widget);
-    if (this.widgets) {
-      this.router.navigate(['/profile', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);
-    }
-  }
-  deleteWidget() {
-    console.log(this.widgets);
-    this.widgets = this.widgetService.deleteWidget(this.widget._id);
-    console.log(this.widgets);
-    if (this.widgets) {
-      this.router.navigate(['/profile', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);
-    }
+
+ update() {
+   this.widgetService.updateWidget(this.widgetId, this.widget).subscribe(
+       (data: any) => {
+         this.widget = data;
+         const url = '/profile/' + this.userId + '/website/' + this.websiteId + '/page/' + this.pageId + '/widget';
+         this.router.navigateByUrl(url);
+         alert('Youtube widget has been created.');
+       }
+   );
+ }
+
+  delete() {
+    this.widgetService.deleteWidget(this.widgetId).subscribe(
+        (data: any) => {
+          this.widgetList = data;
+          const url = '/profile/' + this.userId + '/website/' + this.websiteId + '/page/' + this.pageId + '/widget';
+          this.router.navigateByUrl(url);
+          alert('Widget Youtube has been deleted.');
+        }
+    );
   }
 
   ngOnInit() {
-    this.activatedRouter.params.subscribe(params => {
-      this.userId = params['uid'];
-      this.websiteId = params['wid'];
-      this.pageId = params['pid'];
-      this.widget = this.widgetService.findWidgetById(params['wgid']);
+    this.activatedRouter.params.subscribe((params: any) => {
+      this.userId = params.uid;
+      this.websiteId = params.wid;
+      this.pageId = params.pid;
+      this.widgetId = params.wgid;
+    });
+    this.widgetService.findWidgetById(this.widgetId).subscribe(data => {
+      this.widget = data;
+      console.log(this.widget);
     });
   }
-
 }

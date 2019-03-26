@@ -13,74 +13,84 @@ export class WidgetChooserComponent implements OnInit {
   userId: String;
   pageId: String;
   websiteId: String;
-  widgets = [{}];
+  widgets: Widget[] = [];
   errorFlag: boolean;
   successMsg = 'Your widget has been created. You are now being routed to the edit page for your new widget. ' +
       'You may edit it or use the gray back arrow to add another widget.';
+  successMsg2 = 'Your widget has been created.';
 
   constructor(private widgetService: WidgetServiceClient, private router: Router, private activatedRouter: ActivatedRoute) {
     this.widget = new Widget();
-    console.log(this.widget);
   }
 
-  addWidgetHeader() {
-    this.widget.widgetType = 'HEADING';
-    this.widget.pageId = this.pageId;
-    this.widgets = this.widgetService.createWidget(this.pageId, this.widget);
-    alert(this.successMsg);
-    console.log(this.widget);
-    console.log(this.widgets);
-    const newId = this.widget._id;
-    if (this.widget) {
-      this.router.navigate(['/profile', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget', newId]);
-    } else {
-      this.errorFlag = false;
-    }
+  createHeader(widget) {
+    const id = Math.floor(Math.random() * 1000);
+    const widgetId = id.toString();
+    const newWidget = {
+      _id: widgetId,
+      name: widget.name,
+      pageId: this.pageId,
+      widgetType: 'HEADING',
+      text: widget.text,
+      url: widget.url,
+      size: widget.size,
+      width: widget.width};
+    this.widgetService.createWidget(this.pageId, newWidget).subscribe(
+        (newWid: Widget) => {
+          console.log(newWid);
+          const url = '/profile/' + this.userId + '/website/' + this.websiteId
+              + '/page/' + this.pageId + '/widget/' + newWidget._id;
+          alert(this.successMsg2);
+          this.router.navigateByUrl('/profile/' + this.userId + '/website/' + this.websiteId
+              + '/page/' + this.pageId + '/widget/' + newWidget._id);
+        }
+    );
   }
-  addWidgetImage() {
-    this.widget.widgetType = 'IMAGE';
-    this.widget.pageId = this.pageId;
-    this.widgets = this.widgetService.createWidget(this.pageId, this.widget);
-    alert(this.successMsg);
-    console.log(this.widget);
-    console.log(this.widgets);
-    const newId = this.widget._id;
-    if (this.widget) {
-      this.errorFlag = true;
-      this.router.navigate(['/profile', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget', newId]);
-    } else {
-      this.errorFlag = false;
-    }
+  createImage(widget) {
+    const id = Math.floor(Math.random() * 1000);
+    const widgetId = id.toString();
+    const newWidget = {
+      _id: widgetId,
+      name: widget.name,
+      pageId: this.pageId,
+      widgetType: 'IMAGE',
+      text: widget.text,
+      url: widget.url,
+      size: widget.size,
+      width: widget.width};
+    this.widgetService.createWidget(this.pageId, newWidget).subscribe(
+        (newWid: Widget) => {
+          console.log(newWid);
+          const url = '/profile/' + this.userId + '/website/' + this.websiteId
+              + '/page/' + this.pageId + '/widget/' + newWidget._id;
+          alert(this.successMsg2);
+          this.router.navigateByUrl('/profile/' + this.userId + '/website/' + this.websiteId
+              + '/page/' + this.pageId + '/widget/' + newWidget._id);
+        }
+    );
   }
-  addWidgetVideo() {
-    this.widget.widgetType = 'YOUTUBE';
-    this.widget.pageId = this.pageId;
-    this.widgets = this.widgetService.createWidget(this.pageId, this.widget);
-    alert(this.successMsg);
-    console.log(this.widget);
-    console.log(this.widgets);
-    const newId = this.widget._id;
-    if (this.widget) {
-      this.errorFlag = true;
-      this.router.navigate(['/profile', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget', newId]);
-    } else {
-      this.errorFlag = false;
-    }
-  }
-  addWidgetHTML() {
-    this.widget.widgetType = 'HTML';
-    this.widget.pageId = this.pageId;
-    this.widgets = this.widgetService.createWidget(this.pageId, this.widget);
-    alert(this.successMsg);
-    console.log(this.widget);
-    console.log(this.widgets);
-    const newId = this.widget._id;
-    if (this.widget) {
-      this.errorFlag = true;
-      this.router.navigate(['/profile', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget', newId]);
-    } else {
-      this.errorFlag = false;
-    }
+  createYouTube(widget) {
+    const id = Math.floor(Math.random() * 1000);
+    const widgetId = id.toString();
+    const newWidget = {
+      _id: widgetId,
+      name: widget.name,
+      pageId: this.pageId,
+      widgetType: 'YOUTUBE',
+      text: widget.text,
+      url: widget.url,
+      size: widget.size,
+      width: widget.width};
+    this.widgetService.createWidget(this.pageId, newWidget).subscribe(
+        (newWid: Widget) => {
+          console.log(newWid);
+          const url = '/profile/' + this.userId + '/website/' + this.websiteId
+              + '/page/' + this.pageId + '/widget/' + newWidget._id;
+          alert(this.successMsg2);
+          this.router.navigateByUrl('/profile/' + this.userId + '/website/' + this.websiteId
+              + '/page/' + this.pageId + '/widget/' + newWidget._id);
+        }
+    );
   }
 
 

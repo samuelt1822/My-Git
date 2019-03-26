@@ -22,23 +22,20 @@ export class RegisterComponent implements OnInit {
     this.user = new User();
     console.log(this.user);
   }
-  register(v_password: String) {
+  register() {
     this.user.username = this.registerForm.value.username;
     console.log(this.user.username);
     this.user.password = this.registerForm.value.password;
     this.v_password = this.registerForm.value.v_password;
-
-    if (v_password === this.user.password) {
-      this.errorFlag = false;
-      this.userService.createUser(this.user);
-      console.log(this.user);
-      console.log(this.userService.users);
-      if (this.user) {
-        this.router.navigate(['/login']);
-      }
-    } else {
+    if (this.user.password !== this.v_password) {
       this.errorFlag = true;
+    } else {
+      this.userService.createUser(this.user).subscribe((user: User) => {
+        this.user = user;
+        this.router.navigate(['/profile', this.user._id]);
+      });
     }
+
   }
   ngOnInit() {
   }

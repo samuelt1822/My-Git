@@ -24,7 +24,11 @@ import {UserServiceClient} from './services/user.service.client';
 import {WebsiteServiceClient} from './services/website.service.client';
 import {PageServiceClient} from './services/page.service.client';
 import {WidgetServiceClient} from './services/widget.service.client';
+import {SharedService} from './services/shared.service';
 import {SafePipe} from './safe.pipe';
+import {HttpClientModule} from '@angular/common/http';
+
+import {SortableDirective} from './views/widget/widget-list/sortable.directive';
 
 
 @NgModule({
@@ -45,14 +49,16 @@ import {SafePipe} from './safe.pipe';
     WidgetHeaderComponent,
     WidgetImageComponent,
     WidgetYoutubeComponent,
-      SafePipe
+      SafePipe,
+      SortableDirective
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     FormsModule,
+    HttpClientModule,
+    AppRoutingModule,
   ],
-  providers: [UserServiceClient, WebsiteServiceClient, PageServiceClient, WidgetServiceClient],
+  providers: [UserServiceClient, WebsiteServiceClient, PageServiceClient, WidgetServiceClient, SharedService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

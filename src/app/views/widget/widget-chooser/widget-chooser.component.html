@@ -9,10 +9,10 @@
   </div>
 </header>
 <br/>
-  <ul id="bulletLessList">
-    <li (click)="this.addWidgetHeader()"> Header</li>
-    <li (click)="this.addWidgetImage()"> Image</li>
-    <li (click)="this.addWidgetVideo()"> YouTube</li>
+<ul id="bulletLessList">
+    <li (click)="createHeader(widget)"> Header</li>
+    <li (click)="createImage(widget)"> Image</li>
+    <li (click)="createYouTube(widget)"> YouTube</li>
     <!--Commented out as it needs a new component and that isn't in the homework structure
     <li (click)="this.addWidgetHTML()"> HTML</li>-->
   </ul>

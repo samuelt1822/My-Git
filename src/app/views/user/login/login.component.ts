@@ -4,7 +4,8 @@ import { UserServiceClient } from '../../../services/user.service.client';
 import { Router } from '@angular/router';
 import {User} from '../../../models/user.model.client';
 import 'rxjs';
-
+import {SharedService} from '../../../services/shared.service';
+``
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -18,18 +19,23 @@ export class LoginComponent implements OnInit {
   errorFlag: boolean;
 
   constructor(private userService: UserServiceClient, private router: Router) {
-    this.username = 'test';
   }
-  login() {
-    this.username = this.loginForm.value.username;
-    this.password = this.loginForm.value.password;
-    const user: User = this.userService.findUserByCredential(this.username, this.password);
-    if (user) {
-      this.router.navigate(['/profile', user._id]);
-    } else {
-      this.errorFlag = true;
+
+    login() {
+        this.username = this.loginForm.value.username;
+        this.password = this.loginForm.value.password;
+        this.errorFlag = false;
+        this.userService.findUserByCredentials(this.username, this.password)
+            .subscribe((user: User) => {
+                    if (user) {
+                        console.log(user);
+                        this.router.navigate(['/profile', user._id]);
+                    } else {
+                        this.errorFlag = true;
+                    }
+                }
+            );
     }
-  }
 
   ngOnInit() {
     console.log('login page!' + this.username);
