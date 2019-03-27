@@ -46,6 +46,7 @@ app.use(express.static(path.join(__dirname, 'dist/my-project')));
 
 // CORS
 app.use(function(req, res, next) {
+    //CORS are here, not sure why I get CORS error on Heroku
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
