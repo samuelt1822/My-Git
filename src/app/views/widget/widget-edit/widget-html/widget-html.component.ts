@@ -9,7 +9,6 @@ import {WidgetServiceClient} from '../../../../services/widget.service.client';
   styleUrls: ['./widget-html.component.css']
 })
 export class WidgetHtmlComponent implements OnInit {
-    widgetNew = {name: '', text: ''};
     error: string;
     alert: string;
     flag = false;

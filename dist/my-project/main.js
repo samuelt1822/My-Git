@@ -1858,7 +1858,7 @@ module.exports = ".container-fluid:hover {\n    text-decoration: none;\n}\n#prof
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<body>\n<header>\n    <div class=\"container-fluid\" id=\"profile-gray\" style=\"display: inline-block\">\n        <h1 id=\"profile-header-gray\">&nbsp; Widget Edit\n            <a routerLink=\"/profile/{{userId}}/website/{{websiteId}}/page/{{pageId}}/widget\">\n                <i class=\"fas fa-chevron-left fontawsome_icon\" id= \"back-chevron-gray\"></i>\n            </a>\n            <a routerLink=\"/profile/{{userId}}/website/{{websiteId}}/page/{{pageId}}/widget\">\n                <i class=\"fas fa-check fontawesome_icon\" id=\"check-icon-gray\"></i>\n            </a>\n        </h1>\n    </div>\n</header>\n<br/>\n<div class=\"container\">\n    <div *ngIf=\"flag\"\n         class=\"alert alert-danger\">\n        {{error}}\n    </div>\n    <form novalidate name=\"model.myform\">\n        <div class=\"form-group\">\n            <label for=\"Name\">Name</label>\n            <input [(ngModel)]=\"widget.name\"\n                   type=\"text\"\n                   class=\"form-control\"\n                   id=\"Name\"\n                   name=\"widname\"\n                   placeholder=\"Name\"\n                   required>\n            <span class=\"alert-class\"\n                  *ngIf=\"flag\">{{alert}}</span>\n        </div>\n\n        <!-- use with ngModel-->\n        <quill-editor [(ngModel)]=\"widget.text\" name=\"text\"></quill-editor>\n\n    </form>\n    <p></p>\n    <a class=\"btn btn-success btn-block\" (click)=\"updateWidget()\">Update</a>\n    <a class=\"btn btn-warning btn-block\" (click)=\"deleteWidget()\">Delete</a>\n\n</div>\n<footer id=\"gray-footer\">\n    <div class=\"container-fluid\">\n        <a routerLink=\"/profile/{{userId}}\">\n            <i class=\"fas fa-user fontawesome_icon\" id=\"user-blue\"></i>\n        </a>\n    </div>\n</footer>\n</body>\n"
+module.exports = "<body>\n<header>\n    <div class=\"container-fluid\" id=\"profile-gray\" style=\"display: inline-block\">\n        <h1 id=\"profile-header-gray\">&nbsp; Widget Edit\n            <a routerLink=\"/profile/{{userId}}/website/{{websiteId}}/page/{{pageId}}/widget\">\n                <i class=\"fas fa-chevron-left fontawsome_icon\" id= \"back-chevron-gray\"></i>\n            </a>\n            <a routerLink=\"/profile/{{userId}}/website/{{websiteId}}/page/{{pageId}}/widget\">\n                <i class=\"fas fa-check fontawesome_icon\" id=\"check-icon-gray\"></i>\n            </a>\n        </h1>\n    </div>\n</header>\n<br/>\n<div class=\"container\">\n    <div *ngIf=\"flag\"\n         class=\"alert alert-danger\">\n        {{error}}\n    </div>\n    <form novalidate name=\"model.myform\">\n        <div class=\"form-group\">\n            <label for=\"Name\">Name</label>\n            <input [(ngModel)]=\"widget['name']\"\n                   type=\"text\"\n                   class=\"form-control\"\n                   id=\"Name\"\n                   name=\"widname\"\n                   placeholder=\"Name\"\n                   required>\n            <span class=\"alert-class\"\n                  *ngIf=\"flag\">{{alert}}</span>\n        </div>\n\n        <!-- use with ngModel-->\n        <quill-editor [(ngModel)]=\"widget['text']\" name=\"text\"></quill-editor>\n\n    </form>\n    <p></p>\n    <a class=\"btn btn-success btn-block\" (click)=\"updateWidget()\">Update</a>\n    <a class=\"btn btn-warning btn-block\" (click)=\"deleteWidget()\">Delete</a>\n\n</div>\n<footer id=\"gray-footer\">\n    <div class=\"container-fluid\">\n        <a routerLink=\"/profile/{{userId}}\">\n            <i class=\"fas fa-user fontawesome_icon\" id=\"user-blue\"></i>\n        </a>\n    </div>\n</footer>\n</body>\n"
 
 /***/ }),
 
@@ -1885,7 +1885,6 @@ var WidgetHtmlComponent = /** @class */ (function () {
         this.activatedRouter = activatedRouter;
         this.widgetService = widgetService;
         this.router = router;
-        this.widgetNew = { name: '', text: '' };
         this.flag = false;
         this.widget = {};
     }
@@ -2098,15 +2097,14 @@ var WidgetTextComponent = /** @class */ (function () {
     }
     WidgetTextComponent.prototype.updateWidget = function () {
         var _this = this;
-        // if name field is undefined then set error 'flag' to true making 'error' and 'alert' message visible
         if (this.widget['name'] === undefined) {
             this.flag = true;
         }
         else {
             this.widgetService.updateWidget(this.widgetId, this.widget)
-                .subscribe(function (data) {
+                .subscribe(function (widget) {
+                _this.widget = widget;
                 var url = '/profile/' + _this.userId + '/website/' + _this.websiteId + '/page/' + _this.pageId + '/widget/';
-                alert('Update succeed');
                 _this.router.navigateByUrl(url);
             }, function (error) { return console.log(error); });
         }
@@ -2117,14 +2115,11 @@ var WidgetTextComponent = /** @class */ (function () {
         this.widgetService.deleteWidget(this.widgetId)
             .subscribe(function (data) {
             var url = '/profile/' + _this.userId + '/website/' + _this.websiteId + '/page/' + _this.pageId + '/widget';
-            alert('Update succeed');
             _this.router.navigateByUrl(url);
         }, function (error) { return console.log(error); });
     };
     WidgetTextComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.error = 'Enter the required field';
-        this.alert = '* Enter the required fields';
         this.activatedRouter.params
             .subscribe(function (params) {
             _this.websiteId = params['wid'];
@@ -2132,7 +2127,6 @@ var WidgetTextComponent = /** @class */ (function () {
             _this.widgetId = params['wgid'];
             _this.userId = params['uid'];
         });
-        // fetch widget values as created on widget-new component
         this.widgetService.findWidgetById(this.widgetId)
             .subscribe(function (data) { return _this.widget = data; }, function (error) { return console.log(error); });
     };
