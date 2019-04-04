@@ -11,6 +11,7 @@ module.exports = function (app) {
     app.put("/api/page/:pageId/widget", resortWidget);
     app.post("/api/upload",upload.single('myFile'),uploadImage);
     //app.post("/api/upload", uploadImage); future use?
+    var widgetModel = require('../model/widget/widget.model.server');
 
 
     const widgets = [
@@ -34,9 +35,12 @@ module.exports = function (app) {
     function createWidget (req, res) {
         const pageId = req.params['pageId'];
         var widget = req.body;
-        widgets.push(widget);
+        /*widgets.push(widget);
         var widgetList = simpleFindWidgetsForPage(pageId);
-        res.json(widgetList);
+        res.json(widgetList);*/
+        widgetModel.createWidget(pageId,widget).then( function (widget) {
+            res.json(widget);
+        })
     }
 
     function simpleFindWidgetsForPage(pageId){
@@ -51,8 +55,11 @@ module.exports = function (app) {
 
     function findWidgetsForPage (req, res) {
         const pageId = req.params['pageId'];
-        var widgetList = simpleFindWidgetsForPage(pageId);
-        res.json(widgetList);
+        /*var widgetList = simpleFindWidgetsForPage(pageId);
+        res.json(widgetList);*/
+        widgetModel.findAllWidgetsForPage(pageId).then( function (widget) {
+            res.json(widget);
+        })
     }
 
 
@@ -67,10 +74,19 @@ module.exports = function (app) {
         res.send();
     }
 
-    function updateWidgets(req, res){
+    function updateWidgets(req, res) {
         var widgetId = req.params['widgetId'];
         var widget = req.body;
-        for (var i in widgets) {
+        widgetModel.updateWidget(widgetId, widget).then(
+            function (widget) {
+                res.send(widget);
+            },
+            function (error) {
+                res.send(error);
+            }
+        );
+    }
+        /*for (var i in widgets) {
             if (widgets[i]._id === widgetId) {
                 widgets[i].name = widget['name'];
                 widgets[i].text = widget['text'];
@@ -91,11 +107,15 @@ module.exports = function (app) {
                         widgets[i].width = widget['width'];
                         res.json(widgets[i]);
                         return;
+                    case 'HTML':
+                        widgets[i].url = widget['size'];
+                        res.json(widgets[i]);
+                        return;
                 }
                 res.send();
             }
         }
-    }
+    }*/
     function getWidgetById(widgetId){
         for(var i in widgets){
             if(widgets[i]._id === widgetId) {

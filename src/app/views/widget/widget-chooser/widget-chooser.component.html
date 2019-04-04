@@ -3,7 +3,7 @@
   <div class="container-fluid" id="profile-gray">
     <h1 id="profile-header-gray">&nbsp;&nbsp; Choose Widget
       <a routerLink="/profile/{{userId}}/website/{{websiteId}}/page/{{pageId}}/widget">
-        <i class="fas fa-chevron-left fontawsome_icon" id="back-chevron-gray"></i>
+        <i class="fas fa-chevron-left fontawesome_icon" id="back-chevron-gray"></i>
       </a>
     </h1>
   </div>
@@ -13,14 +13,14 @@
     <li (click)="createHeader(widget)"> Header</li>
     <li (click)="createImage(widget)"> Image</li>
     <li (click)="createYouTube(widget)"> YouTube</li>
-    <!--Commented out as it needs a new component and that isn't in the homework structure
-    <li (click)="this.addWidgetHTML()"> HTML</li>-->
+    <li (click)="createHTML(widget)"> HTML</li>
+    <li (click)="createTEXT(widget)">TEXT</li>
   </ul>
   <br/>
 <footer id="gray-footer">
   <div class="container-fluid">
     <a routerLink="/profile/{{userId}}">
-      <i class="fas fa-user fontawsome_icon" id="user-blue"></i>
+      <i class="fas fa-user fontawesome_icon" id="user-blue"></i>
     </a>
   </div>
 </footer>

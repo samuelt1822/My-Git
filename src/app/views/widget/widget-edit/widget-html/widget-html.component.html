@@ -1,0 +1,50 @@
+<body>
+<header>
+    <div class="container-fluid" id="profile-gray" style="display: inline-block">
+        <h1 id="profile-header-gray">&nbsp; Widget Edit
+            <a routerLink="/profile/{{userId}}/website/{{websiteId}}/page/{{pageId}}/widget">
+                <i class="fas fa-chevron-left fontawsome_icon" id= "back-chevron-gray"></i>
+            </a>
+            <a routerLink="/profile/{{userId}}/website/{{websiteId}}/page/{{pageId}}/widget">
+                <i class="fas fa-check fontawesome_icon" id="check-icon-gray"></i>
+            </a>
+        </h1>
+    </div>
+</header>
+<br/>
+<div class="container">
+    <div *ngIf="flag"
+         class="alert alert-danger">
+        {{error}}
+    </div>
+    <form novalidate name="model.myform">
+        <div class="form-group">
+            <label for="Name">Name</label>
+            <input [(ngModel)]="widget.name"
+                   type="text"
+                   class="form-control"
+                   id="Name"
+                   name="widname"
+                   placeholder="Name"
+                   required>
+            <span class="alert-class"
+                  *ngIf="flag">{{alert}}</span>
+        </div>
+
+        <!-- use with ngModel-->
+        <quill-editor [(ngModel)]="widget.text" name="text"></quill-editor>
+
+    </form>
+    <p></p>
+    <a class="btn btn-success btn-block" (click)="updateWidget()">Update</a>
+    <a class="btn btn-warning btn-block" (click)="deleteWidget()">Delete</a>
+
+</div>
+<footer id="gray-footer">
+    <div class="container-fluid">
+        <a routerLink="/profile/{{userId}}">
+            <i class="fas fa-user fontawesome_icon" id="user-blue"></i>
+        </a>
+    </div>
+</footer>
+</body>

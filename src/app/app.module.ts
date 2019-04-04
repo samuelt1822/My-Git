@@ -29,6 +29,9 @@ import {SafePipe} from './safe.pipe';
 import {HttpClientModule} from '@angular/common/http';
 
 import {SortableDirective} from './views/widget/widget-list/sortable.directive';
+import { WidgetHtmlComponent } from './views/widget/widget-edit/widget-html/widget-html.component';
+import {QuillModule} from 'ngx-quill';
+import { WidgetTextComponent } from './views/widget/widget-edit/widget-text/widget-text.component';
 
 
 @NgModule({
@@ -50,13 +53,16 @@ import {SortableDirective} from './views/widget/widget-list/sortable.directive';
     WidgetImageComponent,
     WidgetYoutubeComponent,
       SafePipe,
-      SortableDirective
+      SortableDirective,
+      WidgetHtmlComponent,
+      WidgetTextComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpClientModule,
     AppRoutingModule,
+    QuillModule
   ],
   providers: [UserServiceClient, WebsiteServiceClient, PageServiceClient, WidgetServiceClient, SharedService],
   bootstrap: [AppComponent]

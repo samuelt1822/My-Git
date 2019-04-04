@@ -3,16 +3,15 @@
   <div class="container-fluid" id="profile-gray" style="display: inline-block">
     <h1 id="profile-header-gray">&nbsp; Widget Edit
       <a routerLink="/profile/{{userId}}/website/{{webId}}/page/{{pageId}}/widget">
-        <i class="fas fa-chevron-left fontawsome_icon" id= "back-chevron-gray"></i>
+        <i class="fas fa-chevron-left fontawesome_icon" id= "back-chevron-gray"></i>
       </a>
       <a routerLink="/profile/{{userId}}/website/{{webId}}/page/{{pageId}}/widget">
-        <i class="fas fa-check fontawsome_icon" id="check-icon-gray"></i>
+        <i class="fas fa-check fontawesome_icon" id="check-icon-gray"></i>
       </a>
     </h1>
   </div>
 </header>
 <br />
-
 <div class="container">
     <div class="form-group">
       <label for="image-name">Name</label>
@@ -48,19 +47,12 @@
   <a (click)="update()" class="btn btn-success  btn-block" id="website-edit-button">Update</a>
   <a (click)="delete()" class="btn btn-warning  btn-block" id="website-delete-button">Delete</a>
 </div>
-
-<nav class="navbar  navbar-light bg-light fixed-bottom">
-  <div class="container-fluid row">
-    <div class="pull-right navbar-text">
+<footer id="gray-footer">
+    <div class="container-fluid">
+        <a routerLink="/profile/{{userId}}">
+            <i class="fas fa-user fontawesome_icon" id="user-blue"></i>
+        </a>
     </div>
-    <div class = "navbar-text">
-      <a routerLink="/profile/{{userId}}" class="cl-icon-padding">
-        <span class="fas fa-user"></span>
-      </a>
-    </div>
-  </div>
-
-</nav>
-
+</footer>
 </body>
 

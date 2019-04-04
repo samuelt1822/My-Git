@@ -69,14 +69,14 @@ export class WidgetChooserComponent implements OnInit {
         }
     );
   }
-  createYouTube(widget) {
+  createHTML(widget) {
     const id = Math.floor(Math.random() * 1000);
     const widgetId = id.toString();
     const newWidget = {
       _id: widgetId,
       name: widget.name,
       pageId: this.pageId,
-      widgetType: 'YOUTUBE',
+      widgetType: 'HTML',
       text: widget.text,
       url: widget.url,
       size: widget.size,
@@ -92,6 +92,52 @@ export class WidgetChooserComponent implements OnInit {
         }
     );
   }
+    createYouTube(widget) {
+        const id = Math.floor(Math.random() * 1000);
+        const widgetId = id.toString();
+        const newWidget = {
+            _id: widgetId,
+            name: widget.name,
+            pageId: this.pageId,
+            widgetType: 'YOUTUBE',
+            text: widget.text,
+            url: widget.url,
+            size: widget.size,
+            width: widget.width};
+        this.widgetService.createWidget(this.pageId, newWidget).subscribe(
+            (newWid: Widget) => {
+                console.log(newWid);
+                const url = '/profile/' + this.userId + '/website/' + this.websiteId
+                    + '/page/' + this.pageId + '/widget/' + newWidget._id;
+                alert(this.successMsg2);
+                this.router.navigateByUrl('/profile/' + this.userId + '/website/' + this.websiteId
+                    + '/page/' + this.pageId + '/widget/' + newWidget._id);
+            }
+        );
+    }
+    createTEXT(widget) {
+        const id = Math.floor(Math.random() * 1000);
+        const widgetId = id.toString();
+        const newWidget = {
+            _id: widgetId,
+            name: widget.name,
+            pageId: this.pageId,
+            widgetType: 'TEXT',
+            text: widget.text,
+            url: widget.url,
+            size: widget.size,
+            width: widget.width};
+        this.widgetService.createWidget(this.pageId, newWidget).subscribe(
+            (newWid: Widget) => {
+                console.log(newWid);
+                const url = '/profile/' + this.userId + '/website/' + this.websiteId
+                    + '/page/' + this.pageId + '/widget/' + newWidget._id;
+                alert(this.successMsg2);
+                this.router.navigateByUrl('/profile/' + this.userId + '/website/' + this.websiteId
+                    + '/page/' + this.pageId + '/widget/' + newWidget._id);
+            }
+        );
+    }
 
 
   ngOnInit() {

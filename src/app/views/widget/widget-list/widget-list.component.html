@@ -3,10 +3,10 @@
   <div class="container-fluid" id="profile-gray">
     <h1 id="profile-header-gray">&nbsp;&nbsp; Widgets
       <a routerLink="/profile/{{userId}}/website/{{websiteId}}/page">
-        <i class="fas fa-chevron-left fontawsome_icon" id="back-chevron-gray"></i>
+        <i class="fas fa-chevron-left fontawesome_icon" id="back-chevron-gray"></i>
       </a>
       <a routerLink="/profile/{{userId}}/website/{{websiteId}}/page/{{pageId}}/widget/new">
-        <i class="fas fa-plus fontawsome_icon" id="check-icon-gray"></i>
+        <i class="fas fa-plus fontawesome_icon" id="check-icon-gray"></i>
       </a>
     </h1>
   </div>
@@ -19,7 +19,7 @@
         <div class="float-right">
           <div class="widget-cog-edit">
             <a routerLink="/profile/{{userId}}/website/{{websiteId}}/page/{{pageId}}/widget/{{widget['_id']}}">
-              <i class="fas fa-cog fontawsome_icon"></i>
+              <i class="fas fa-cog fontawesome_icon"></i>
             </a>
           </div>
         </div>
@@ -48,8 +48,25 @@
         <div *ngSwitchCase="'IMAGE'">
           <img  style="width: 540px; height: 360px;" [src]="widget.url">
         </div>
-        <div *ngSwitchCase="'YOUTUBE'" >
-          <object style="width: 540px; height: 360px; float: none; clear: both; margin: 2px auto;" [data]="getUrl(widget)"></object>
+        <div class="youtube-widget-holder">
+          <div *ngSwitchCase="'YOUTUBE'" class= "youtube-widget">
+            <iframe width="560" height="315" [src]="widget.url | safe" frameborder="0" allowfullscreen></iframe>
+            <!--<object style=" float: none; clear: both; margin: 2px auto;"
+                    [data]="getUrl(widget)"></object>-->
+          </div>
+        </div>
+
+        <div *ngSwitchCase="'HTML'" [innerHTML]="widget.text">
+        </div>
+        <div *ngSwitchCase="'Text'">
+          <div *ngIf="widget.formatted">
+            <quill-editor [(ngModel)]="widget.text" name="text"></quill-editor>
+          </div>
+          <input *ngIf="!widget.formatted && (!widget.rows || widget.rows===1)" placeholder="{{widget.placeholder}}"
+                 class="form-control"/>
+          <textarea *ngIf="!widget.formatted && (widget.rows > 1)"
+                    rows="{{widget.rows}}" placeholder="{{widget.placeholder}}"
+                    class="form-control">{{widget.text}}</textarea>
         </div>
         <p *ngSwitchDefault><br></p>
       </div>
@@ -59,7 +76,7 @@
 <footer id="gray-footer">
   <div class="container-fluid">
     <a routerLink="/profile/{{userId}}">
-      <i class="fas fa-user fontawsome_icon" id="user-blue"></i>
+      <i class="fas fa-user fontawesome_icon" id="user-blue"></i>
     </a>
   </div>
 </footer>
