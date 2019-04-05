@@ -14,7 +14,7 @@ export class UserServiceClient {
 
     baseUrl = environment.baseUrl;
 
-    createUser(user: User) {
+    createUser(user: any) {
         const body = {_id: '', username: user.username, password: user.password };
         return this.http.post(this.baseUrl + '/api/user', body);
     }

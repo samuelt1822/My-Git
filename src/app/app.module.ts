@@ -65,6 +65,6 @@ import { WidgetTextComponent } from './views/widget/widget-edit/widget-text/widg
     QuillModule
   ],
   providers: [UserServiceClient, WebsiteServiceClient, PageServiceClient, WidgetServiceClient, SharedService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent] /**add a line here for the cannot get*/
 })
 export class AppModule { }

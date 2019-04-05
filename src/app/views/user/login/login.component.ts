@@ -24,11 +24,16 @@ export class LoginComponent implements OnInit {
     login() {
         this.username = this.loginForm.value.username;
         this.password = this.loginForm.value.password;
+
+
         this.errorFlag = false;
         this.userService.findUserByCredentials(this.username, this.password)
-            .subscribe((user: User) => {
+            .subscribe((user: any) => { /**added the any on this line instead of User*/
                     if (user) {
                         console.log(user);
+                        /**Class additions - we will now be using cached info and won't be displaying user id anymore
+                        //this.sharedService.user = user;
+                        //this.router.navigate(['profile']); - class addition*/
                         this.router.navigate(['/profile', user._id]);
                     } else {
                         this.errorFlag = true;

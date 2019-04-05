@@ -86,6 +86,7 @@ var routes = [
     { path: 'profile/:uid/website/:wid/page/:pid/widget/:wgid/:image', component: _views_widget_widget_edit_widget_image_widget_image_component__WEBPACK_IMPORTED_MODULE_16__["WidgetImageComponent"] },
     { path: 'profile/:uid/website/:wid/page/:pid/widget/:wgid/:youtube', component: _views_widget_widget_edit_widget_youtube_widget_youtube_component__WEBPACK_IMPORTED_MODULE_17__["WidgetYoutubeComponent"] }
 ];
+/** Make sure to update this routing for A6*/
 var AppRoutingModule = /** @class */ (function () {
     function AppRoutingModule() {
     }
@@ -265,7 +266,7 @@ var AppModule = /** @class */ (function () {
                 ngx_quill__WEBPACK_IMPORTED_MODULE_30__["QuillModule"]
             ],
             providers: [_services_user_service_client__WEBPACK_IMPORTED_MODULE_21__["UserServiceClient"], _services_website_service_client__WEBPACK_IMPORTED_MODULE_22__["WebsiteServiceClient"], _services_page_service_client__WEBPACK_IMPORTED_MODULE_23__["PageServiceClient"], _services_widget_service_client__WEBPACK_IMPORTED_MODULE_24__["WidgetServiceClient"], _services_shared_service__WEBPACK_IMPORTED_MODULE_25__["SharedService"]],
-            bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_5__["AppComponent"]]
+            bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_5__["AppComponent"]] /**add a line here for the cannot get*/
         })
     ], AppModule);
     return AppModule;
@@ -999,6 +1000,9 @@ var LoginComponent = /** @class */ (function () {
             .subscribe(function (user) {
             if (user) {
                 console.log(user);
+                /**Class additions - we will now be using cached info and won't be displaying user id anymore
+                //this.sharedService.user = user;
+                //this.router.navigate(['profile']); - class addition*/
                 _this.router.navigate(['/profile', user._id]);
             }
             else {
@@ -1186,7 +1190,7 @@ var RegisterComponent = /** @class */ (function () {
             this.errorFlag = true;
         }
         else {
-            this.userService.createUser(this.user).subscribe(function (user) {
+            this.userService.createUser({ username: this.user.username, password: this.user.password }).subscribe(function (user) {
                 _this.user = user;
                 _this.router.navigate(['/profile', _this.user._id]);
             });

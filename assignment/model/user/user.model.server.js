@@ -27,11 +27,12 @@ function findUserById(userID) {
 }
 
 function findUserByUserName(userName) {
-    return userModel.findOne({userName:userName});
+    return userModel.findOne({username:userName});
 }
 
 function findByCredential(userName,password){
-    return userModel.findOne({userName:userName,password:password});
+    console.log("cred")
+    return userModel.findOne({username:userName,password:password});
 }
 
 function updateUser(userId,user) {

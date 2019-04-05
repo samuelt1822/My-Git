@@ -34,10 +34,10 @@ const routes: Routes = [
     {path: 'profile/:uid/website/:wid/page/:pid/widget/:wgid/:youtube', component: WidgetYoutubeComponent}
 
     ];
-
+/** Make sure to update this routing for A6*/
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {useHash: true})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

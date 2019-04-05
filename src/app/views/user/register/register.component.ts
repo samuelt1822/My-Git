@@ -30,7 +30,7 @@ export class RegisterComponent implements OnInit {
     if (this.user.password !== this.v_password) {
       this.errorFlag = true;
     } else {
-      this.userService.createUser(this.user).subscribe((user: User) => {
+      this.userService.createUser({username: this.user.username, password: this.user.password}).subscribe((user: User) => {
         this.user = user;
         this.router.navigate(['/profile', this.user._id]);
       });

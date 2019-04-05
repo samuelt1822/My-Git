@@ -2,13 +2,46 @@ module.exports = function (app) {
 
     //HTTP methods for users below
     app.post("/api/user", createUser);
-    app.get("/api/user/:uid", findUserById);
     app.get("/api/username", findUserByUsername);
     app.get("/api/user", findUserByCredentials);
+    app.get('/api/user/:uid', findUserById)
     app.put("/api/user/:uid", updateUser);
     app.delete("/api/user/:uid", deleteUser);
+    /**app.post('api/login', passport.authenticateUser)
+     * app.post('api/logout', logout);
+     * app.post('api/register', register); when on the site you want to check if the user is logged in
+     * The shared service is so that as the user goes across the web page then you want to maintain that
+     * object and can immediately access that user
+     */
 
     var userModel = require('../model/user/user.model.server');
+
+    /**login and logout logic here uses the passport authentication
+     * const passport = require('passport');
+    const LocalStrategy = require('passport-local').Strategy;
+
+    passport.serializeUser(serializeUser);
+    passport.deserializeUser(deserializeUser);
+    passport.use(new LocalStrategy(localStrategy));
+
+    function localStrategy(username, password, done) {
+        userModel
+            .findByCredentials(username, password)
+            .then(
+                function(user) {
+                    if(user.username === username && user.password === password) {
+
+                    }
+                }
+            )
+    }
+
+    function serializeUser(user, done) {
+        done(null, user);
+    }
+    function deserializeUser(user, done) {
+        userModel
+    }*/
 
 
     const users = [
@@ -26,7 +59,8 @@ module.exports = function (app) {
     ];
 
     function createUser(req, res) {
-        const user = req.body;
+        console.log(req.body);
+        const user = { username: req.body.username, password: req.body.password};
         userModel.createUser(user).then(function (user) {
             res.send(user);
         }, function(error){
@@ -69,6 +103,7 @@ module.exports = function (app) {
     //use the .then instead of exec because I don't need full promises
 
     function findUserByCredentials(req, res) {
+        console.log('Hello');
         const username = req.query["username"];
         const password = req.query["password"];
         /*var user = null;
@@ -79,7 +114,11 @@ module.exports = function (app) {
             });
             res.json(user);
         }*/
+        console.log(username)
+        console.log(password)
+
         userModel.findByCredentials(username, password).then(function(user){
+            console.log(user)
             res.send(user);
         }, function(error){
             console.log("create user error:" + error);
