@@ -16,7 +16,8 @@ export class WidgetHtmlComponent implements OnInit {
     error: string;
     alert: string;
     flag = false;
-    widget: Widget = new Widget('', '', '', '', '', '', '', false, '', '');
+    widget: Widget = new Widget('', '', '', '',
+        '', '', '', '', false, '');
     userId: string;
     websiteId: string;
     pageId: string;
