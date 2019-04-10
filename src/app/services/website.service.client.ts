@@ -9,7 +9,7 @@ import {environment} from '../../environments/environment';
 export class WebsiteServiceClient {
 
 
-    websites: Website[] = [
+    /*websites: Website[] = [
         new Website('1', 'Facebook', '123', 'Lorem'),
         new Website('2', 'Twitter', '456', 'Lorem'),
         new Website('3', 'Gizmodo', '234', 'Lorem'),
@@ -19,13 +19,13 @@ export class WebsiteServiceClient {
         new Website( '7', 'Rent the Runway', '345', 'Lorem'),
         new Website( '8', 'NOVA', '234', 'Lorem'),
         new Website( '9', 'History Channel', '456', 'Lorem'),
-    ];
+    ];*/
 
     constructor(private http: HttpClient) {}
     baseUrl = environment.baseUrl;
 
     createWebsite(userId: String, website: Website) {
-        const newWeb = {_id: '', name: website.name, developerId: website.developerId, description: website.description};
+        const newWeb = {name: website.name, developerId: website.developerId, description: website.description};
         return this.http.post(this.baseUrl + '/api/user/' + userId + '/website', newWeb);
     }
 

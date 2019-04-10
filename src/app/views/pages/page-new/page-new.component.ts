@@ -18,17 +18,23 @@ export class PageNewComponent implements OnInit {
   userId: String;
   websiteId: String;
   currentPage: Page;
+  name: String;
+  description: String;
   errorFlag: boolean;
   successMsg = 'Your page has been added. You may add another or select Pages to return to your page list.';
 
   constructor(private pageService: PageServiceClient, private router: Router, private activatedRouter: ActivatedRoute) {
-    this.page = new Page;
-    console.log(this.page);
+    /**this.page = new Page;
+    console.log(this.page);*/
   }
     create() {
-        this.pageService.createPage(this.websiteId, this.currentPage).subscribe(
-            (data: any) => {
-                this.pages = data;
+      const page = new Page(undefined, this.name, this.websiteId, this.description);
+        /**this.page = new Page(this.page._id, this.page.name, this.websiteId, this.page.description);*/
+       /** this.pageService.createPage(this.websiteId, page).subscribe(*/
+       this.pageService.createPage(this.websiteId,
+           {_id: undefined, name: this.currentPage.name, websiteId: this.currentPage.websiteId, description: this.currentPage.description})
+           .subscribe((data: any) => {
+                /**this.pages = data;*/
                 const url = '/profile/' + this.userId + '/website/' + this.websiteId + '/page';
                 this.router.navigateByUrl(url);
             }
@@ -44,7 +50,7 @@ export class PageNewComponent implements OnInit {
       );
       console.log(this.userId);
       console.log(this.websiteId);
-      this.currentPage = new Page();
+      this.currentPage = new Page('', '', this.websiteId, '');
   }
 }
 

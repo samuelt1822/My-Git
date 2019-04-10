@@ -14,7 +14,7 @@ module.exports = function (app) {
     var widgetModel = require('../model/widget/widget.model.server');
 
 
-    const widgets = [
+    /*const widgets = [
         { _id: "1", name: "name", widgetType: "HEADING", pageId: "3", size: "2", text: "Two months after Venezuelan " +
                 "President Nicolas Maduro visited his counterpart Recep Tayyip Erdogan in Ankara, a mysterious " +
                 "company called Sardes sprang into existence. The firm started business with a bang in January " +
@@ -30,7 +30,7 @@ module.exports = function (app) {
             url: "https://www.youtube.com/embed/x_CrVERam8c"},
         { _id: "6", name: "name", widgetType: "HEADING", pageId: "3", size: "1", text: "Get social with family " +
                 "and friends."},
-    ];
+    ];*/
 
     function createWidget (req, res) {
         const pageId = req.params['pageId'];
@@ -38,9 +38,13 @@ module.exports = function (app) {
         /*widgets.push(widget);
         var widgetList = simpleFindWidgetsForPage(pageId);
         res.json(widgetList);*/
-        widgetModel.createWidget(pageId,widget).then( function (widget) {
-            res.json(widget);
-        })
+        widgetModel.createWidget(pageId,widget)
+            .then(
+                function (widget) {
+            res.status(200).send(widget);
+        }, function (error) {
+                    res.status(404).send(error);
+                });
     }
 
     function simpleFindWidgetsForPage(pageId){
@@ -57,34 +61,44 @@ module.exports = function (app) {
         const pageId = req.params['pageId'];
         /*var widgetList = simpleFindWidgetsForPage(pageId);
         res.json(widgetList);*/
-        widgetModel.findAllWidgetsForPage(pageId).then( function (widget) {
-            res.json(widget);
-        })
+        widgetModel.findAllWidgetsForPage(pageId)
+            .then(
+                function (widget) {
+                    res.status(200).send(widget);
+                }, function (error) {
+                    res.status(404).send(error);
+                });
     }
 
 
     function findWidgetById (req, res) {
         const widgetId = req.params['widgetId'];
-        for(var i in widgets){
+        /*for(var i in widgets){
             if(widgets[i]._id === widgetId) {
                 res.json(widgets[i]);
                 return;
             }
         }
-        res.send();
+        res.send();*/
+        widgetModel.findWidgetById(widgetId)
+            .then(
+                function(widget) {
+                    res.status(200).send(widget);
+                }, function (error) {
+                    res.status(404).send(error);
+                });
     }
 
     function updateWidgets(req, res) {
         var widgetId = req.params['widgetId'];
         var widget = req.body;
-        widgetModel.updateWidget(widgetId, widget).then(
-            function (widget) {
-                res.send(widget);
-            },
-            function (error) {
-                res.send(error);
-            }
-        );
+        widgetModel.updateWidget(widgetId, widget)
+            .then(
+                function (widget) {
+                    res.status(200).send(widget);
+                    }, function (error) {
+                    res.status(404).send(error);
+            });
     }
         /*for (var i in widgets) {
             if (widgets[i]._id === widgetId) {
@@ -125,7 +139,7 @@ module.exports = function (app) {
     }
     function deleteWidget(req, res) {
         var widgetId = req.params['widgetId'];
-        var widget = getWidgetById(widgetId);
+        /*var widget = getWidgetById(widgetId);
         var pageId = widget['pageId'];
         for (const i in widgets) {
             if (widgets[i]._id === widgetId) {
@@ -135,13 +149,21 @@ module.exports = function (app) {
                 res.json(allWidgets);
             }
         }
-        res.json();
+        res.json();*/
+        widgetModel.deleteWidget(widgetId)
+            .then(
+                function (widget) {
+                    res.status(200).send(widget);
+                }, function (error) {
+                    res.status(404).send(error);
+                });
     }
 
     function resortWidget(req,res) {
         var startIndex = parseInt(req.query["initial"]);
         var endIndex = parseInt(req.query["final"]);
-        if(endIndex > startIndex){
+        var pageId = req.params.pageId;
+        /*if(endIndex > startIndex){
             var index =  widgets[startIndex];
             for(var i = startIndex; i < endIndex; i++){
                 widgets[i] = widgets[i+1];
@@ -153,7 +175,14 @@ module.exports = function (app) {
                 widgets[i] = widgets[i-1];
             }
             widgets[endIndex] = index;
-        }
+        }*/
+        widgetModel.reorderWidget(pageId, startIndex, endIndex)
+            .then(
+                function(page) {
+                    res.status(200).send(page);
+                }, function(error) {
+                    res.status(400).send(error);
+                });
     }
 
     function uploadImage(req, res){

@@ -9,14 +9,13 @@ import {environment} from '../../environments/environment';
 
 export class PageServiceClient {
 
-    constructor(private http: HttpClient) {
-    }
+    constructor(private http: HttpClient) {}
 
     baseURL = environment.baseUrl;
 
     createPage(websiteId: String, page: Page) {
-        const currentPage = {_id: page._id, name: page.name, websiteId: page.websiteId, description: page.description };
-        return this.http.post(this.baseURL + '/api/website/' + websiteId + '/page', currentPage );
+        /**const currentPage = {_id: page._id, name: page.name, websiteId: page.websiteId, description: page.description };*/
+        return this.http.post(this.baseURL + '/api/website/' + websiteId + '/page', page);
     }
     findAllPagesForWebsite(websiteId: String) {
         return this.http.get(this.baseURL + '/api/website/' + websiteId + '/page');

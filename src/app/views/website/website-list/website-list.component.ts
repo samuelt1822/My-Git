@@ -23,6 +23,7 @@ export class WebsiteListComponent implements OnInit {
     console.log(this.userId);
     this.websiteService.findWebsitesByUser(this.userId).subscribe((data: any) => {
       this.websites = data;
+      console.log(this.websites);
     });
   }
 }

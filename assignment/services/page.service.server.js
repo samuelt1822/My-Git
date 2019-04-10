@@ -7,6 +7,8 @@ module.exports = function (app) {
     app.put("/api/page/:pageId", updatePage);
     app.delete("/api/page/:pageId", deletePage);
 
+    var pageModel = require('../model/page/page.model.server');
+
     var pages = [
         {_id: '1', name: 'New Stories', websiteId: '8', description: 'Archaeologists find new bones.'},
         {_id: '2', name: 'Top Scores', websiteId: '4', description: 'Player One score is 57. Player Two score is 99.'},
@@ -24,13 +26,23 @@ module.exports = function (app) {
     function createPage(req, res){
         const websiteId = req.params['websiteId'];
         const newPage = req.body;
+        /*id no longer required in database
         const id = Math.floor(Math.random() * 1000);
         const pageId = id.toString();
         newPage['_id'] = pageId;
         newPage['websiteId'] = websiteId;
         pages.push(newPage);
         const allWebPages = simpleFindAllPages(websiteId);
-        res.json(allWebPages);
+        res.json(allWebPages);*/
+        pageModel.createPage(websiteId, newPage)
+            .then(
+                function(newPage) {
+                    res.status(200).send(newPage);
+                },
+                function(error) {
+                    res.status(400).send(error);
+                }
+            );
 
     }
 
@@ -46,38 +58,63 @@ module.exports = function (app) {
 
     function findAllPagesForWebsite(req, res){
         const websiteId = req.params['websiteId'];
-        const allWebPages=[];
+        /*const allWebPages=[];
         for(var i = 0; i < pages.length; i++){
             if(pages[i].websiteId === websiteId){
                 allWebPages.push(pages[i]);
             }
         }
         res.json(allWebPages);
-        return;
+        return;*/
+        pageModel.findAllPagesForWebsite(websiteId)
+            .then(
+                function(pages){
+                    res.status(200).send(pages);
+                }, function (error) {
+                    res.status(404).send(error);
+                }
+            );
     }
 
     function findPageById(req, res){
         const pageId = req.params.pageId;
-        for(var i in pages){
+        /*for(var i in pages){
             if(pages[i]._id === pageId){
                 res.json(pages[i]);
                 return;
             }
         }
-        res.send({});
+        res.send({});*/
+        pageModel.findPageById(pageId)
+            .then(
+                function(page){
+                    res.status(200).send(page);
+                }, function(error) {
+                    res.status(404).send(error);
+                }
+            );
     }
 
     function updatePage(req, res) {
         const page = req.body;
         const pageId = req.params.pageId;
-        for (const i in pages) {
+        /*for (const i in pages) {
             if (pages[i]._id === pageId) {
                 pages[i]= page;
                 res.json(pages[i]);
                 return;
             }
         }
-        res.send({});
+        res.send({});*/
+        pageModel.updatePage(pageId, page)
+            .then(
+                function(page){
+                    res.status(200).send(page);
+                },
+                function(error) {
+                    res.status(404).send(error);
+                }
+            );
     }
 
     function simpleFindPageById(pageId){
@@ -90,7 +127,7 @@ module.exports = function (app) {
 
     function deletePage(req, res) {
         const pageId = req.params.pageId;
-        const page  =  simpleFindPageById(pageId);
+        /*const page  =  simpleFindPageById(pageId);
         const webId = page['websiteId'];
         for (const i in pages) {
             if (pages[i]._id === pageId) {
@@ -101,8 +138,15 @@ module.exports = function (app) {
                 return;
             }
         }
-        res.send({});
-
+        res.send({});*/
+        pageModel.deletePage(pageId)
+            .then(
+                function(page){
+                    res.status(200).send(page);
+                }, function (error) {
+                    res.status(404).send(error);
+                }
+            );
     }
 
 }

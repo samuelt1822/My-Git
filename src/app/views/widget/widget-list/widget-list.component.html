@@ -15,7 +15,7 @@
 <div class="container cl-container-padding">
   <div class="widget-list" appSortable (newIndexes)="sortWidget($event)">
     <div *ngFor="let widget of widgets">
-      <div [ngSwitch]="widget['widgetType']">
+      <div [ngSwitch]="widget.widgetType">
         <div class="float-right">
           <div class="widget-cog-edit">
             <a routerLink="/profile/{{userId}}/website/{{websiteId}}/page/{{pageId}}/widget/{{widget['_id']}}">
@@ -58,7 +58,7 @@
 
         <div *ngSwitchCase="'HTML'" [innerHTML]="widget.text">
         </div>
-        <div *ngSwitchCase="'Text'">
+        <div *ngSwitchCase="'TEXT'">
           <div *ngIf="widget.formatted">
             <quill-editor [(ngModel)]="widget.text" name="text"></quill-editor>
           </div>

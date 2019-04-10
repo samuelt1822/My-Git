@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var websiteSchema = require ('../website/website.schema.server');
 
 var userSchema = new mongoose.Schema(
     {username: String,
@@ -7,7 +8,7 @@ var userSchema = new mongoose.Schema(
         lastName: String,
         email: String,
         phone: String,
-        websites: [{type: mongoose.Schema.Types.ObjectId, ref: 'Website'}],
+        websites: [websiteSchema],
         dateCreated: {type: Date, default: Date.now()}},
     {collection: 'Users'});
 

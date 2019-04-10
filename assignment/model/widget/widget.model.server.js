@@ -3,7 +3,10 @@ var mongoose = require('mongoose');
 
 //this converts the schema to a model that can be used
 var widgetSchema = require("./widget.schema.server");
+var widgetModel = mongoose.model("Widgets", widgetSchema);
+/*
 var widgetModel = mongoose.model("WidgetModel", widgetSchema);
+*/
 var pageModel = require('../page/page.model.server');
 
 widgetModel.createWidget = createWidget;
@@ -18,13 +21,15 @@ module.exports = widgetModel;
 
 function createWidget(pageId,widget) {
     return widgetModel.create(widget)
-        .then(function (createdWidget) {
+        .then(function (widget) {
             pageModel.findPageById(pageId)
                 .then(function (page) {
-                    page.widgets.push(createdWidget);
-                    return page.save();
+                    widget.position = page.widgets.length;
+                    page.widgets.push(widget);
+                    /**pageModel.updatePage(pageId, page);*/
+                    page.save();
                 });
-            return createdWidget;
+            return widget;
         });
 }
 

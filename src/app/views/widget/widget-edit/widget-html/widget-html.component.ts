@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Widget} from '../../../../models/widget.model.client';
 import {ActivatedRoute, Router} from '@angular/router';
 import {WidgetServiceClient} from '../../../../services/widget.service.client';
+import {NgForm} from '@angular/forms';
 
 @Component({
   selector: 'app-widget-html',
@@ -9,6 +10,9 @@ import {WidgetServiceClient} from '../../../../services/widget.service.client';
   styleUrls: ['./widget-html.component.css']
 })
 export class WidgetHtmlComponent implements OnInit {
+
+    @ViewChild('f') htmlForm: NgForm;
+
     error: string;
     alert: string;
     flag = false;
@@ -19,6 +23,7 @@ export class WidgetHtmlComponent implements OnInit {
     widgetId: string;
     baseUrl: string;
     public editor;
+    widget2 = {name: '', text: ''};
 
 
   constructor(private activatedRouter: ActivatedRoute, private widgetService: WidgetServiceClient, private router: Router) { }
@@ -39,7 +44,6 @@ export class WidgetHtmlComponent implements OnInit {
     }
     deleteWidget() {
 
-        // call delete widget function from widget client service
         this.widgetService.deleteWidget(this.widgetId)
             .subscribe(
                 (data: any) => this.router.navigate(['/profile', this.userId, 'website', this.websiteId,
@@ -64,14 +68,17 @@ export class WidgetHtmlComponent implements OnInit {
               }
           );
 
-
-
-      // fetching current widget based on widgetId
-      this.widgetService.findWidgetById(this.widgetId)
+      /**this.widgetService.findWidgetById(this.widgetId)
           .subscribe(
               (data: any) => {this.widget = data; },
               (error: any) => console.log(error)
-          );
+          );*/
+      this.widgetService.findWidgetById(this.widgetId).subscribe((data: any) => {
+              this.widget = data;
+              //weird line - try to understand but without it it can't read the name of the property
+          //as it's null
+              this.widget = {...this.widget2, ...this.widget}; },
+          (error: any) => console.log(error));
   }
 }
 

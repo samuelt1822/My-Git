@@ -4,8 +4,9 @@
 
 export const environment = {
   production: false,
-  /**below added for a4 testing*/
   baseUrl: 'http://localhost:3200'
+    /**baseUrl: 'https://first-appcs5610.herokuapp.com'*/
+
 };
 
 /*

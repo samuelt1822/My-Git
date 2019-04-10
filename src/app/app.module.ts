@@ -30,8 +30,9 @@ import {HttpClientModule} from '@angular/common/http';
 
 import {SortableDirective} from './views/widget/widget-list/sortable.directive';
 import { WidgetHtmlComponent } from './views/widget/widget-edit/widget-html/widget-html.component';
-import {QuillModule} from 'ngx-quill';
+import {QuillEditorModule} from 'ngx-quill-editor';
 import { WidgetTextComponent } from './views/widget/widget-edit/widget-text/widget-text.component';
+import {AuthGuard}
 
 
 @NgModule({
@@ -52,17 +53,17 @@ import { WidgetTextComponent } from './views/widget/widget-edit/widget-text/widg
     WidgetHeaderComponent,
     WidgetImageComponent,
     WidgetYoutubeComponent,
-      SafePipe,
-      SortableDirective,
-      WidgetHtmlComponent,
-      WidgetTextComponent,
+    SafePipe,
+    SortableDirective,
+    WidgetHtmlComponent,
+    WidgetTextComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpClientModule,
     AppRoutingModule,
-    QuillModule
+    QuillEditorModule
   ],
   providers: [UserServiceClient, WebsiteServiceClient, PageServiceClient, WidgetServiceClient, SharedService],
   bootstrap: [AppComponent] /**add a line here for the cannot get*/

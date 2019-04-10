@@ -1,3 +1,9 @@
+/** For A6
+ var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+var FacebookStrategy = require('passport-facebook').Strategy;
+var bcrypt = require('bcrypt-nodejs');*/
+
 module.exports = function (app) {
 
     //HTTP methods for users below
@@ -44,7 +50,7 @@ module.exports = function (app) {
     }*/
 
 
-    const users = [
+    /**const users = [
         {_id: "123", username: "alice",    password: "pass1",    firstName: "Alice",  lastName: "Wonderland", email: "alice@gmail.com"},
         {_id: "234", username: "bob",      password: "pass2",      firstName: "Bob",    lastName: "Marley", email: "bob@gmail.com"},
         {_id: "345", username: "charly",   password: "pass3",   firstName: "Charly", lastName: "Garcia", email: "charly@gmail.com"},
@@ -56,15 +62,17 @@ module.exports = function (app) {
         {username: "bob",      password: "pass2",      firstName: "Bob",    lastName: "Marley", email: "bob@gmail.com"},
         {username: "charly",   password: "pass3",   firstName: "Charly", lastName: "Garcia", email: "charly@gmail.com"},
         {username: "jannunzi", password: "pass4", firstName: "Jose",   lastName: "Annunzi", email: "jose@gmail.com"}
-    ];
+    ];*/
 
     function createUser(req, res) {
         console.log(req.body);
         const user = { username: req.body.username, password: req.body.password};
-        userModel.createUser(user).then(function (user) {
+        userModel.createUser(user)
+            .then(
+                function (user) {
             res.send(user);
         }, function(error){
-            console.log("create user error:" + error);
+            console.log("Error creating user:" + error);
             res.status(400);
 
         });
@@ -89,12 +97,14 @@ module.exports = function (app) {
             return;
         }
         res.send({});*/
-        userModel.findById(userId).then(function(user){
+        userModel.findById(userId)
+            .then(
+                function(user){
 
             res.send(user);
         }, function(error){
-            console.log("create user error:" + error);
-            res.status(400);
+            console.log("Error finding user" + error);
+            res.status(400).send(error);
 
         });
     }
@@ -103,7 +113,6 @@ module.exports = function (app) {
     //use the .then instead of exec because I don't need full promises
 
     function findUserByCredentials(req, res) {
-        console.log('Hello');
         const username = req.query["username"];
         const password = req.query["password"];
         /*var user = null;
@@ -117,11 +126,13 @@ module.exports = function (app) {
         console.log(username)
         console.log(password)
 
-        userModel.findByCredentials(username, password).then(function(user){
+        userModel.findByCredentials(username, password)
+            .then(
+                function(user){
             console.log(user)
             res.send(user);
         }, function(error){
-            console.log("create user error:" + error);
+            console.log("Error finding user by credentials" + error);
             res.status(400);
         });
     }
@@ -134,11 +145,12 @@ module.exports = function (app) {
                 return;
             }
         }*/
-        userModel.findUserByUserName(username).then(function(user){
+        userModel.findUserByUserName(username)
+            .then(
+                function(user){
             res.send(user);
-            console.log('I am searching user');
         }, function(error){
-            console.log("find user by username error:" + error);
+            console.log("Error finding user by username:" + error);
             res.status(400).send(error);
         });
     }
@@ -154,12 +166,13 @@ module.exports = function (app) {
                 return;
             }
         }*/
-        userModel.updateUser(userId,user).then(
-            function(user) {
-                res.send(user);
+        userModel.updateUser(userId,user)
+            .then(
+                function(user) {
+                    res.send(user);
             }, function (error) {
-                console.log("update user error:" + error);
-                res.status(400).send("update is not successful!");
+                console.log("Error updating user:" + error);
+                res.status(400).send(error);
             }
         );
     }
@@ -175,12 +188,13 @@ module.exports = function (app) {
         }
         res.json(users);
     }*/
-        userModel.deleteUser(userId).then(
-            function(user) {
-                res.send(user);
+        userModel.deleteUser(userId)
+            .then(
+                function(user) {
+                    res.send(user);
             }, function (error) {
-                console.log("delete user error:" + error);
-                res.status(400).send("use not found");
+                console.log("Error deleting user:" + error);
+                res.status(400).send(error);
             }
         );
     }

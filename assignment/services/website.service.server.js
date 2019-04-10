@@ -23,6 +23,7 @@ module.exports = function (app) {
     function createWebsite(req, res){
         const userId = req.params['userId'];
         const website = req.body;
+        console.log(website);
         /*const id = Math.floor(Math.random() * 1000);
         website._id = id.toString();
         website.developerId = userId;
@@ -30,13 +31,13 @@ module.exports = function (app) {
         const websitesForUser = getAllWebsites(userId);
         res.json(websitesForUser);*/
         websiteModel.createWebsite(userId, website)
-            .then({function(website){
+            .then(
+                function(website){
                 res.send(website);
-            },
-            function(error){
-                res.status(400).send("Error of create website:"+error);
+            }, function(error){
+                res.status(400).send("Error creating website:" + error);
             }
-        });
+        );
     }
 
     function getAllWebsites(userId){
@@ -61,12 +62,11 @@ module.exports = function (app) {
         websiteModel.findAllWebsitesForUser(userId)
             .then(
                 function (websites) {
-                    res.json(websites);
-                },
-                function (err) {
-                    res.statusCode(400).send(err);
+                    res.status(200).send(websites);
+                }, function (error) {
+                    res.status(400).send(error);
                 }
-            )
+            );
     }
 
     function findWebsiteById(req,res){
@@ -81,11 +81,9 @@ module.exports = function (app) {
         websiteModel.findWebsiteById(websiteId)
             .then(
                 function(website){
-                    console.log('send website:' + website);
                     res.send(website);
-                },
-                function (err) {
-                    res.statusCode(400).send(err);
+                }, function (error) {
+                    res.status(400).send(error);
                 }
             )
     }
@@ -97,9 +95,8 @@ module.exports = function (app) {
             .then(
                 function (website) {
                     res.send(website);
-                },
-                function (err) {
-                    res.statusCode(400).send(err);
+                }, function (error) {
+                    res.status(400).send(error);
                 }
             );
         /*for(var i = 0; i < websites.length; i++) {
@@ -124,11 +121,10 @@ module.exports = function (app) {
         const websiteId = req.params['websiteId'];
         websiteModel.deleteWebsite(websiteId)
             .then(
-                function (data) {
-                    res.json(data);
-                },
-                function (err) {
-                    res.statusCode(400).send(err);
+                function (website) {
+                    res.json(website);
+                }, function (error) {
+                    res.status(400).send(error);
                 }
             );
     }

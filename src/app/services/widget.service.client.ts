@@ -11,10 +11,13 @@ export class WidgetServiceClient {
     constructor(private http: HttpClient) {}
     baseUrl = environment.baseUrl;
 
-    createWidget(pageId: String, widget: Widget) {
-        const currentWidget = {_id: widget._id, name: widget['name'], widgetType: widget.widgetType, pageId: widget.pageId,
+    createWidget(pageId: String, widget: any) {
+        /**below uncommented works */
+        const url = this.baseUrl + '/api/page/' + pageId + '/widget';
+        return this.http.post(url, widget);
+        /**const currentWidget = {_id: widget._id, name: widget['name'], widgetType: widget.widgetType, pageId: widget.pageId,
             size: widget.size, text: widget.text, width: widget.width, url: widget.url };
-        return this.http.post(this.baseUrl + '/api/page/' + pageId + '/widget', currentWidget);
+        return this.http.post(this.baseUrl + '/api/page/' + pageId + '/widget', currentWidget);*/
     }
 
     findWidgetByPageId(pageId: String) {
@@ -28,10 +31,12 @@ export class WidgetServiceClient {
     }
 
     updateWidget(widgetId: String, widget: any) {
-        const currentWidget = {_id: widget['_id'], name: widget['name'], widgetType: widget['widgetType'],
+        /**const currentWidget = {_id: widget['_id'], name: widget['name'], widgetType: widget['widgetType'],
             pageId: widget['pageId'], size: widget['size'],
             text: widget['text'], width: widget['width'], url: widget['url'] };
-        return this.http.put(this.baseUrl + '/api/widget/' + widgetId, currentWidget);
+        return this.http.put(this.baseUrl + '/api/widget/' + widgetId, currentWidget);*/
+        const url = this.baseUrl + '/api/widget/' + widgetId;
+        return this.http.put(url, widget);
     }
 
     deleteWidget(widgetId: String) {

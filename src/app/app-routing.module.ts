@@ -15,6 +15,8 @@ import {WidgetEditComponent} from './views/widget/widget-edit/widget-edit.compon
 import {WidgetHeaderComponent} from './views/widget/widget-edit/widget-header/widget-header.component';
 import {WidgetImageComponent} from './views/widget/widget-edit/widget-image/widget-image.component';
 import {WidgetYoutubeComponent} from './views/widget/widget-edit/widget-youtube/widget-youtube.component';
+import {WidgetHtmlComponent} from './views/widget/widget-edit/widget-html/widget-html.component';
+import {WidgetTextComponent} from './views/widget/widget-edit/widget-text/widget-text.component';
 
 const routes: Routes = [
     {path: 'login', component: LoginComponent},
@@ -31,13 +33,14 @@ const routes: Routes = [
     {path: 'profile/:uid/website/:wid/page/:pid/widget/:wgid', component: WidgetEditComponent},
     {path: 'profile/:uid/website/:wid/page/:pid/widget/:wgid/:header', component: WidgetHeaderComponent},
     {path: 'profile/:uid/website/:wid/page/:pid/widget/:wgid/:image', component: WidgetImageComponent},
-    {path: 'profile/:uid/website/:wid/page/:pid/widget/:wgid/:youtube', component: WidgetYoutubeComponent}
-
+    {path: 'profile/:uid/website/:wid/page/:pid/widget/:wgid/:youtube', component: WidgetYoutubeComponent},
+    {path: 'profile/:uid/website/:wid/page/:pid/widget/:wgid/:html', component: WidgetYoutubeComponent},
+    {path: 'profile/:uid/website/:wid/page/:pid/widget/:wgid/:text', component: WidgetYoutubeComponent}
     ];
 /** Make sure to update this routing for A6*/
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {useHash: true})],
+  imports: [RouterModule.forRoot(routes, /**{useHash: true}*/)],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

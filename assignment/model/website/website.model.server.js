@@ -32,17 +32,17 @@ function createWebsite(userId,website) {
 }
 
 function findAllWebsitesForUser(userId) {
-    return websiteModel.find({userId:userId});
+    return websiteModel.find({developerId:userId});
 }
 
-function findWebsiteById(id) {
-    return websiteModel.findById(id);
+function findWebsiteById(webId) {
+    return websiteModel.findById(webId);
 }
 
-function updateWebsite(id,website) {
-    return websiteModel.findByIdAndUpdate(id,website);
+function updateWebsite(webId,website) {
+    return websiteModel.findByIdAndUpdate(webId,website);
 }
 
-function deleteWebsite(id){
-    return websiteModel.findByIdAndRemove(id);
+function deleteWebsite(webId){
+    return websiteModel.findByIdAndRemove(webId);
 }

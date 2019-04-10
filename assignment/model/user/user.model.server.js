@@ -9,14 +9,7 @@ userModel.findByCredentials = findByCredential;
 userModel.updateUser = updateUser;
 userModel.deleteUser = deleteUser;
 
-//helper function
-userModel.populateUsers = populateUsers;
-
 module.exports = userModel;
-
-function populateUsers(users) {
-    return userModel.insertMany(users);
-}
 
 function createUser(user) {
     return userModel.create(user);
@@ -31,7 +24,6 @@ function findUserByUserName(userName) {
 }
 
 function findByCredential(userName,password){
-    console.log("cred")
     return userModel.findOne({username:userName,password:password});
 }
 
