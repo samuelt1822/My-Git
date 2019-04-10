@@ -16,7 +16,7 @@ export class WidgetHtmlComponent implements OnInit {
     error: string;
     alert: string;
     flag = false;
-    widget = Widget;
+    widget: Widget = new Widget('', '', '', '', '', '', '', false, '', '');
     userId: string;
     websiteId: string;
     pageId: string;
@@ -75,7 +75,7 @@ export class WidgetHtmlComponent implements OnInit {
           );*/
       this.widgetService.findWidgetById(this.widgetId).subscribe((data: any) => {
               this.widget = data;
-              this.widget2 = {...this.widget2, ...this.widget}; },
+              this.widget = {...this.widget2, ...this.widget}; },
           (error: any) => console.log(error));
   }
 }
