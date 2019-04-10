@@ -75,9 +75,7 @@ export class WidgetHtmlComponent implements OnInit {
           );*/
       this.widgetService.findWidgetById(this.widgetId).subscribe((data: any) => {
               this.widget = data;
-              //weird line - try to understand but without it it can't read the name of the property
-          //as it's null
-              this.widget = {...this.widget2, ...this.widget}; },
+              this.widget2 = {...this.widget2, ...this.widget}; },
           (error: any) => console.log(error));
   }
 }

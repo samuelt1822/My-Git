@@ -265,7 +265,6 @@ var AppModule = /** @class */ (function () {
                 _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormsModule"],
                 _angular_common_http__WEBPACK_IMPORTED_MODULE_27__["HttpClientModule"],
                 _app_routing_module__WEBPACK_IMPORTED_MODULE_4__["AppRoutingModule"],
-                /**QuillModule,*/
                 ngx_quill_editor__WEBPACK_IMPORTED_MODULE_30__["QuillEditorModule"]
             ],
             providers: [_services_user_service_client__WEBPACK_IMPORTED_MODULE_21__["UserServiceClient"], _services_website_service_client__WEBPACK_IMPORTED_MODULE_22__["WebsiteServiceClient"], _services_page_service_client__WEBPACK_IMPORTED_MODULE_23__["PageServiceClient"], _services_widget_service_client__WEBPACK_IMPORTED_MODULE_24__["WidgetServiceClient"], _services_shared_service__WEBPACK_IMPORTED_MODULE_25__["SharedService"]],
@@ -2015,7 +2014,7 @@ var WidgetHtmlComponent = /** @class */ (function () {
             );*/
         this.widgetService.findWidgetById(this.widgetId).subscribe(function (data) {
             _this.widget = data;
-            _this.widget = tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"]({}, _this.widget2, _this.widget);
+            _this.widget2 = tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"]({}, _this.widget2, _this.widget);
         }, function (error) { return console.log(error); });
     };
     tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
