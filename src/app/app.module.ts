@@ -32,7 +32,7 @@ import {SortableDirective} from './views/widget/widget-list/sortable.directive';
 import { WidgetHtmlComponent } from './views/widget/widget-edit/widget-html/widget-html.component';
 import {QuillEditorModule} from 'ngx-quill-editor';
 import { WidgetTextComponent } from './views/widget/widget-edit/widget-text/widget-text.component';
-import {AuthGuard}
+
 
 
 @NgModule({
