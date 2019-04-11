@@ -25,6 +25,7 @@ export class WidgetHtmlComponent implements OnInit {
     baseUrl: string;
     public editor;
     widget2 = {name: '', text: ''};
+    widgetList = [];
 
 
   constructor(private activatedRouter: ActivatedRoute, private widgetService: WidgetServiceClient, private router: Router) { }
@@ -47,8 +48,11 @@ export class WidgetHtmlComponent implements OnInit {
 
         this.widgetService.deleteWidget(this.widgetId)
             .subscribe(
-                (data: any) => this.router.navigate(['/profile', this.userId, 'website', this.websiteId,
-                    'page', this.pageId, 'widget']),
+                (data: any) => {
+                    this.widgetList = data;
+                    this.router.navigate(['/profile', this.userId, 'website', this.websiteId,
+                        'page', this.pageId, 'widget']);
+                },
                 (error: any) => console.log(error)
             );
 

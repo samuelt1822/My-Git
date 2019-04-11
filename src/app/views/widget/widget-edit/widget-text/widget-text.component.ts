@@ -15,6 +15,7 @@ export class WidgetTextComponent implements OnInit {
   widgetId: string;
   userId: string;
   widget = {};
+  widgetList = [];
 
   constructor(private widgetService: WidgetServiceClient, private router: Router, private activatedRouter: ActivatedRoute) { }
 
@@ -40,6 +41,7 @@ export class WidgetTextComponent implements OnInit {
     this.widgetService.deleteWidget(this.widgetId)
         .subscribe(
             (data: any) => {
+                this.widgetList = data;
               const url = '/profile/' + this.userId + '/website/' + this.websiteId + '/page/' + this.pageId + '/widget';
               this.router.navigateByUrl(url);
             },
