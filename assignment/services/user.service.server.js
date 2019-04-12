@@ -33,12 +33,12 @@ module.exports = function (app) {
         });
 
     var facebookConfig = {
-    clientID: process.env.FACEBOOK_CLIENT_ID,
+    clientID: process.env.FACEBOOK_CLIENT_ID || '1993555897607210',
     //    clientID:    '1993555897607210',
-    clientSecret: process.env.FACEBOOK_SECRET_ID,
+    clientSecret: process.env.FACEBOOK_SECRET_ID || 'f3e6e95dcac8c960f3ba7b08401abece',
     //    clientSecret: 'f3e6e95dcac8c960f3ba7b08401abece',
     // callbackURL: 'http://localhost:3200/auth/facebook/callback'
-    callbackURL: process.env.FACEBOOK_CALLBACK
+    callbackURL: process.env.FACEBOOK_CALLBACK || 'http://localhost:3200/auth/facebook/callback'
         };
 
     passport.use(new LocalStrategy(localStrategy));
