@@ -26,18 +26,19 @@ module.exports = function (app) {
         passport.authenticate('facebook', {
             failureRedirect: '/#/login',
            // successRedirect: '/#/profile'
+
        // }));
         }), function(req, res) {
         res.redirect('#profile' + req.user._id);
         });
 
     var facebookConfig = {
-    //clientID: process.env.FACEBOOK_CLIENT_ID,
-        clientID:    '1993555897607210',
-    //clientSecret: process.env.FACEBOOK_SECRET_ID,
-        clientSecret: 'f3e6e95dcac8c960f3ba7b08401abece',
-    callbackURL: 'http://localhost:3200/auth/facebook/callback'
-    //callbackURL: process.env.FACEBOOK_CALLBACK
+    clientID: process.env.FACEBOOK_CLIENT_ID,
+    //    clientID:    '1993555897607210',
+    clientSecret: process.env.FACEBOOK_SECRET_ID,
+    //    clientSecret: 'f3e6e95dcac8c960f3ba7b08401abece',
+    // callbackURL: 'http://localhost:3200/auth/facebook/callback'
+    callbackURL: process.env.FACEBOOK_CALLBACK
         };
 
     passport.use(new LocalStrategy(localStrategy));
