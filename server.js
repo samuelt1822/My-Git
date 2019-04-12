@@ -4,7 +4,6 @@ const http = require('http');
 const bodyParser = require('body-parser');
 const app = express();
 
-/** For A6
  const passport = require('passport');
  const cookieParser = require('cookie-parser');
  const session = require('express-session');
@@ -22,8 +21,6 @@ const app = express();
  app.use(passport.initialize());
  app.use(passport.session());
 
- */
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -37,6 +34,7 @@ app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  /**res.header("Access-Control-Allow-Credentials", "true");*/
   next();
 });
 
@@ -49,9 +47,8 @@ const server = http.createServer(app);
 server.listen( port , () => console.log('Running on port 3200'));
 
 //Database requirements
-//var connectionString = 'mongodb://127.0.0.1:27017/webdev';
+var connectionString = 'mongodb://127.0.0.1:27017/webdev';
 /** To use database var connectionString = process.env.MONGODB_URI;*/
-var connectionString ='mongodb://teela:newpass123@ds135456.mlab.com:35456/heroku_6kkqr13h';
 var mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 const client = mongoose.connect(connectionString, {useNewURLParser:true});

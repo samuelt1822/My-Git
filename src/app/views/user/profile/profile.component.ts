@@ -26,7 +26,7 @@ export class ProfileComponent implements OnInit {
               private router: Router) { }
 
   updateUser() {
-      this.userService.updateUser(this.user).subscribe(
+      this.userService.updateUser(this.userId, this.user).subscribe(
           (data: any) => {
               this.user = data;
               console.log(this.user);
@@ -42,10 +42,12 @@ export class ProfileComponent implements OnInit {
             () => this.router.navigate(['/login'])
         );
     }
-    /** Maintaining this function in case more functionality is added to logout.
     logout() {
-        this.router.navigate(['/login']);
-    }*/
+        return this.userService.logout().subscribe((data: any) => {
+                this.router.navigate(['/login']);
+            }
+        );
+    }
   ngOnInit() {
       this.activatedRoute.params.subscribe((params: any) => {this.userId = params.uid; });
       console.log(this.userId);

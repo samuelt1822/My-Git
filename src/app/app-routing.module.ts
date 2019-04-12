@@ -17,30 +17,31 @@ import {WidgetImageComponent} from './views/widget/widget-edit/widget-image/widg
 import {WidgetYoutubeComponent} from './views/widget/widget-edit/widget-youtube/widget-youtube.component';
 import {WidgetHtmlComponent} from './views/widget/widget-edit/widget-html/widget-html.component';
 import {WidgetTextComponent} from './views/widget/widget-edit/widget-text/widget-text.component';
+import {AuthGuard} from './services/auth-guard.service';
 
 const routes: Routes = [
     {path: 'login', component: LoginComponent},
     {path: 'register', component: RegisterComponent},
-    {path: 'profile/:uid', component: ProfileComponent},
-    {path: 'profile/:uid/website', component: WebsiteListComponent},
-    {path: 'profile/:uid/website/new', component: WebsiteNewComponent},
-    {path: 'profile/:uid/website/:wid', component: WebsiteEditComponent},
-    {path: 'profile/:uid/website/:wid/page', component: PageListComponent},
-    {path: 'profile/:uid/website/:wid/page/new', component: PageNewComponent},
-    {path: 'profile/:uid/website/:wid/page/:pid', component: PageEditComponent},
-    {path: 'profile/:uid/website/:wid/page/:pid/widget', component: WidgetListComponent},
-    {path: 'profile/:uid/website/:wid/page/:pid/widget/new', component: WidgetChooserComponent},
-    {path: 'profile/:uid/website/:wid/page/:pid/widget/:wgid', component: WidgetEditComponent},
-    {path: 'profile/:uid/website/:wid/page/:pid/widget/:wgid/:header', component: WidgetHeaderComponent},
-    {path: 'profile/:uid/website/:wid/page/:pid/widget/:wgid/:image', component: WidgetImageComponent},
-    {path: 'profile/:uid/website/:wid/page/:pid/widget/:wgid/:youtube', component: WidgetYoutubeComponent},
-    {path: 'profile/:uid/website/:wid/page/:pid/widget/:wgid/:html', component: WidgetYoutubeComponent},
-    {path: 'profile/:uid/website/:wid/page/:pid/widget/:wgid/:text', component: WidgetYoutubeComponent}
+    /**{path: 'profile/:uid', component: ProfileComponent, canActivate: [AuthGuard]},*/
+    {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
+    {path: 'profile/:uid/website', component: WebsiteListComponent, canActivate: [AuthGuard]},
+    {path: 'profile/:uid/website/new', component: WebsiteNewComponent, canActivate: [AuthGuard]},
+    {path: 'profile/:uid/website/:wid', component: WebsiteEditComponent, canActivate: [AuthGuard]},
+    {path: 'profile/:uid/website/:wid/page', component: PageListComponent, canActivate: [AuthGuard]},
+    {path: 'profile/:uid/website/:wid/page/new', component: PageNewComponent, canActivate: [AuthGuard]},
+    {path: 'profile/:uid/website/:wid/page/:pid', component: PageEditComponent, canActivate: [AuthGuard]},
+    {path: 'profile/:uid/website/:wid/page/:pid/widget', component: WidgetListComponent, canActivate: [AuthGuard]},
+    {path: 'profile/:uid/website/:wid/page/:pid/widget/new', component: WidgetChooserComponent, canActivate: [AuthGuard]},
+    {path: 'profile/:uid/website/:wid/page/:pid/widget/:wgid', component: WidgetEditComponent, canActivate: [AuthGuard]},
+    {path: 'profile/:uid/website/:wid/page/:pid/widget/:wgid/:header', component: WidgetHeaderComponent, canActivate: [AuthGuard]},
+    {path: 'profile/:uid/website/:wid/page/:pid/widget/:wgid/:image', component: WidgetImageComponent, canActivate: [AuthGuard]},
+    {path: 'profile/:uid/website/:wid/page/:pid/widget/:wgid/:youtube', component: WidgetYoutubeComponent, canActivate: [AuthGuard]},
+    {path: 'profile/:uid/website/:wid/page/:pid/widget/:wgid/:html', component: WidgetHtmlComponent, canActivate: [AuthGuard]},
+    {path: 'profile/:uid/website/:wid/page/:pid/widget/:wgid/:text', component: WidgetTextComponent, canActivate: [AuthGuard]}
     ];
-/** Make sure to update this routing for A6*/
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, /**{useHash: true}*/)],
+  imports: [RouterModule.forRoot(routes, {useHash: true})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

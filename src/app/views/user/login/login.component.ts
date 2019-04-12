@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import {User} from '../../../models/user.model.client';
 import 'rxjs';
 import {SharedService} from '../../../services/shared.service';
-``
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -18,7 +18,8 @@ export class LoginComponent implements OnInit {
   errorMsg = 'Invalid username or password!';
   errorFlag: boolean;
 
-  constructor(private userService: UserServiceClient, private router: Router) {
+  constructor(private userService: UserServiceClient, private router: Router,
+              private sharedService: SharedService) {
   }
 
     login() {
@@ -27,13 +28,12 @@ export class LoginComponent implements OnInit {
 
 
         this.errorFlag = false;
-        this.userService.findUserByCredentials(this.username, this.password)
+        this.userService.login(this.username, this.password)
             .subscribe((user: any) => { /**added the any on this line instead of User*/
                     if (user) {
-                        console.log(user);
-                        /**Class additions - we will now be using cached info and won't be displaying user id anymore
-                        //this.sharedService.user = user;
-                        //this.router.navigate(['profile']); - class addition*/
+                        /**Class additions - we will now be using cached info and won't be displaying user id anymore*/
+                        this.sharedService.user = user;
+                        // this.router.navigate(['profile']);
                         this.router.navigate(['/profile', user._id]);
                     } else {
                         this.errorFlag = true;

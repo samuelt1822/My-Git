@@ -1,8 +1,7 @@
-/** For A6
- var passport = require('passport');
+var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
-var bcrypt = require('bcrypt-nodejs');*/
+var bcrypt = require('bcrypt-nodejs');
 
 module.exports = function (app) {
 
@@ -13,60 +12,134 @@ module.exports = function (app) {
     app.get('/api/user/:uid', findUserById)
     app.put("/api/user/:uid", updateUser);
     app.delete("/api/user/:uid", deleteUser);
-    /**app.post('api/login', passport.authenticateUser)
-     * app.post('api/logout', logout);
-     * app.post('api/register', register); when on the site you want to check if the user is logged in
-     * The shared service is so that as the user goes across the web page then you want to maintain that
-     * object and can immediately access that user
-     */
 
     var userModel = require('../model/user/user.model.server');
 
-    /**login and logout logic here uses the passport authentication
-     * const passport = require('passport');
-    const LocalStrategy = require('passport-local').Strategy;
+    //OAuth
+    app.post('/api/login', passport.authenticate('local'), login);
+    app.post('/api/logout', logout);
+    app.post('/api/register', register);
+    app.post('/api/loggedIn', loggedIn);
 
+    app.get('/facebook/login', passport.authenticate('facebook', {scope: 'email'}));
+    app.get('/auth/facebook/callback',
+        passport.authenticate('facebook', {
+            failureRedirect: '/#/login',
+           // successRedirect: '/#/profile'
+       // }));
+        }), function(req, res) {
+        res.redirect('#profile' + req.user._id);
+        });
+
+    var facebookConfig = {
+    //clientID: process.env.FACEBOOK_CLIENT_ID,
+        clientID:    '1993555897607210',
+    //clientSecret: process.env.FACEBOOK_SECRET_ID,
+        clientSecret: 'f3e6e95dcac8c960f3ba7b08401abece',
+    callbackURL: 'http://localhost:3200/auth/facebook/callback'
+    //callbackURL: process.env.FACEBOOK_CALLBACK
+        };
+
+    passport.use(new LocalStrategy(localStrategy));
     passport.serializeUser(serializeUser);
     passport.deserializeUser(deserializeUser);
-    passport.use(new LocalStrategy(localStrategy));
+    passport.use(new FacebookStrategy(facebookConfig, facebookStrategy));
 
-    function localStrategy(username, password, done) {
-        userModel
-            .findByCredentials(username, password)
+    function facebookStrategy(token, refreshToken, profile, done){
+        userModel.findFBUser(profile.id)
             .then(
                 function(user) {
-                    if(user.username === username && user.password === password) {
-
+                    if(user) {
+                        return done(null, user);
+                    } else {
+                        var names = profile.displayName.split(" ");
+                        var newFacebookUser = {
+                            lastName: names[1],
+                            firstName: names[0],
+                            email: profile.emails ? profile.emails[0].value:"",
+                            facebook: { id: profile.id, token: token } };
+                        return userModel.createUser(newFacebookUser);
                     }
-                }
-            )
+                }, function(err) {
+                    if (err) {
+                        return done(err);
+                    } } );
     }
 
     function serializeUser(user, done) {
         done(null, user);
     }
+
     function deserializeUser(user, done) {
-        userModel
-    }*/
+        userModel.findUserById(user._id).then(
+            function(user){
+                done(null, user);
+            },
+            function(err){
+                done(err, null);
+            }
+        );
+    }
 
+    function login(req, res) {
+        var user = req.user;
+        res.json(user);
+    }
 
-    /**const users = [
-        {_id: "123", username: "alice",    password: "pass1",    firstName: "Alice",  lastName: "Wonderland", email: "alice@gmail.com"},
-        {_id: "234", username: "bob",      password: "pass2",      firstName: "Bob",    lastName: "Marley", email: "bob@gmail.com"},
-        {_id: "345", username: "charly",   password: "pass3",   firstName: "Charly", lastName: "Garcia", email: "charly@gmail.com"},
-        {_id: "456", username: "jannunzi", password: "pass4", firstName: "Jose",   lastName: "Annunzi", email: "jose@gmail.com"}
-    ];
+    function logout(req, res) {
+        req.logout();
+        res.json("success");
+        return;
+    }
 
-    const users_db = [
-        {username: "alice",    password: "pass1",    firstName: "Alice",  lastName: "Wonderland", email: "alice@gmail.com"},
-        {username: "bob",      password: "pass2",      firstName: "Bob",    lastName: "Marley", email: "bob@gmail.com"},
-        {username: "charly",   password: "pass3",   firstName: "Charly", lastName: "Garcia", email: "charly@gmail.com"},
-        {username: "jannunzi", password: "pass4", firstName: "Jose",   lastName: "Annunzi", email: "jose@gmail.com"}
-    ];*/
+    function register(req, res) {
+        var user = req.body;
+        user.password = bcrypt.hashSync(user.password);
+        userModel.findUserByUsername(user.username).then(function (data) {
+            if(data){
+                res.status(400).send('Username has already been taken!');
+                return;
+            } else{
+                userModel.createUser(user).then(
+                    function(user){
+                        if(user){
+                            req.login(user, function(err) {
+                                if(err) {
+                                    res.status(400).send(err);
+                                } else {
+                                    res.json(user);
+                                }
+                            });
+                        }
+                    }
+                );
+            }
+        })
+
+    }
+
+    function loggedIn(req, res) {
+        res.send(req.isAuthenticated() ? req.user : '0');
+    }
+
+    function localStrategy(username, password, done) {
+        userModel.findUserByUserName(username).then(
+            function (user) {
+                if (user && bcrypt.compareSync(password, user.password)) {
+                    return done(null, user);
+                } else {
+                    return done(null, false);
+                }
+            },
+            function (err) {
+                res.send(400).send(err);
+            });
+    }
 
     function createUser(req, res) {
         console.log(req.body);
-        const user = { username: req.body.username, password: req.body.password};
+        const user = req.body;
+        //const user = { username: req.body.username, password: req.body.password};
         userModel.createUser(user)
             .then(
                 function (user) {
@@ -76,15 +149,6 @@ module.exports = function (app) {
             res.status(400);
 
         });
-        /*const id = Math.floor(Math.random() * 1000);
-        user._id = id.toString();
-        //code below is to ensure that the user ID is not used twice and doesn't present any problems with finding users.
-        /*while(users.find(user._id)) {
-            const id = Math.floor(Math.random() * 1000);
-            user._id = id.toString();
-        }
-        users.push(user);
-        res.json(user);*/
     }
 
     function findUserById(req, res){

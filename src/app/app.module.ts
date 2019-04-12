@@ -32,7 +32,7 @@ import {SortableDirective} from './views/widget/widget-list/sortable.directive';
 import { WidgetHtmlComponent } from './views/widget/widget-edit/widget-html/widget-html.component';
 import {QuillEditorModule} from 'ngx-quill-editor';
 import { WidgetTextComponent } from './views/widget/widget-edit/widget-text/widget-text.component';
-
+import {AuthGuard} from './services/auth-guard.service';
 
 
 @NgModule({
@@ -65,7 +65,7 @@ import { WidgetTextComponent } from './views/widget/widget-edit/widget-text/widg
     AppRoutingModule,
     QuillEditorModule
   ],
-  providers: [UserServiceClient, WebsiteServiceClient, PageServiceClient, WidgetServiceClient, SharedService],
+  providers: [UserServiceClient, WebsiteServiceClient, PageServiceClient, WidgetServiceClient, SharedService, AuthGuard],
   bootstrap: [AppComponent] /**add a line here for the cannot get*/
 })
 export class AppModule { }
