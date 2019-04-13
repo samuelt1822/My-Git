@@ -1181,16 +1181,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _services_user_service_client__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../services/user.service.client */ "./src/app/services/user.service.client.ts");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _services_shared_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../services/shared.service */ "./src/app/services/shared.service.ts");
+
 
 
 
 
 
 var ProfileComponent = /** @class */ (function () {
-    function ProfileComponent(userService, activatedRoute, router) {
+    function ProfileComponent(userService, activatedRoute, router, sharedService) {
         this.userService = userService;
         this.activatedRoute = activatedRoute;
         this.router = router;
+        this.sharedService = sharedService;
         this.user = {};
         this.user2 = {};
         this.errorMsg = 'Invalid username or password.';
@@ -1216,13 +1219,17 @@ var ProfileComponent = /** @class */ (function () {
     };
     ProfileComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.activatedRoute.params.subscribe(function (params) { _this.userId = params.uid; });
+        this.userId = this.sharedService.user['_id'];
+        return this.userService.findUserById(this.userId).subscribe(function (user) {
+            _this.user = user;
+        });
+        /**this.activatedRoute.params.subscribe((params: any) => {this.userId = params.uid; });
         console.log(this.userId);
         this.userService.findUserById(this.userId)
-            .subscribe(function (data) {
-            console.log(data);
-            _this.user = data;
-        });
+            .subscribe((data: any) => {
+                console.log(data);
+                this.user = data;
+            });*/
     };
     ProfileComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
@@ -1231,7 +1238,7 @@ var ProfileComponent = /** @class */ (function () {
             styles: [__webpack_require__(/*! ./profile.component.css */ "./src/app/views/user/profile/profile.component.css")]
         }),
         tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_services_user_service_client__WEBPACK_IMPORTED_MODULE_2__["UserServiceClient"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"],
-            _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"]])
+            _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"], _services_shared_service__WEBPACK_IMPORTED_MODULE_5__["SharedService"]])
     ], ProfileComponent);
     return ProfileComponent;
 }());

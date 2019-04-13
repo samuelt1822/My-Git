@@ -23,7 +23,7 @@ export class ProfileComponent implements OnInit {
   errorFlag: boolean;
   errorMsg = 'Invalid username or password.';
   constructor(private userService: UserServiceClient, private activatedRoute: ActivatedRoute,
-              private router: Router) { }
+              private router: Router, private sharedService: SharedService) { }
 
   updateUser() {
       this.userService.updateUser(this.userId, this.user).subscribe(
@@ -49,13 +49,19 @@ export class ProfileComponent implements OnInit {
         );
     }
   ngOnInit() {
-      this.activatedRoute.params.subscribe((params: any) => {this.userId = params.uid; });
+      this.userId = this.sharedService.user['_id'];
+      return this.userService.findUserById(this.userId).subscribe(
+          (user: User) => {
+          this.user = user;
+          }
+      );
+      /**this.activatedRoute.params.subscribe((params: any) => {this.userId = params.uid; });
       console.log(this.userId);
       this.userService.findUserById(this.userId)
           .subscribe((data: any) => {
               console.log(data);
               this.user = data;
-          });
+          });*/
   }
 }
 
