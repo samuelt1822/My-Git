@@ -60,10 +60,10 @@ module.exports = function (app) {
             )
     }
 
-    function updateWebsite(req, res){
+    function updateWebsite(req, res) {
         const websiteId = req.params['websiteId'];
         var updatedWebsite = req.body;
-        websiteModel.updateWebsite(websiteId,updatedWebsite)
+        websiteModel.updateWebsite(websiteId, updatedWebsite)
             .then(
                 function (website) {
                     res.send(website);
@@ -71,6 +71,7 @@ module.exports = function (app) {
                     res.status(400).send(error);
                 }
             );
+    }
 
 
     function deleteWebsite(req, res){

@@ -78,7 +78,7 @@ __webpack_require__.r(__webpack_exports__);
 var routes = [
     { path: 'login', component: _views_user_login_login_component__WEBPACK_IMPORTED_MODULE_3__["LoginComponent"] },
     { path: 'register', component: _views_user_register_register_component__WEBPACK_IMPORTED_MODULE_5__["RegisterComponent"] },
-    /**{path: 'profile/:uid', component: ProfileComponent, canActivate: [AuthGuard]},*/
+    { path: 'profile/:uid', component: _views_user_profile_profile_component__WEBPACK_IMPORTED_MODULE_4__["ProfileComponent"] },
     { path: 'profile', component: _views_user_profile_profile_component__WEBPACK_IMPORTED_MODULE_4__["ProfileComponent"], canActivate: [_services_auth_guard_service__WEBPACK_IMPORTED_MODULE_20__["AuthGuard"]] },
     { path: 'profile/:uid/website', component: _views_website_website_list_website_list_component__WEBPACK_IMPORTED_MODULE_10__["WebsiteListComponent"], canActivate: [_services_auth_guard_service__WEBPACK_IMPORTED_MODULE_20__["AuthGuard"]] },
     { path: 'profile/:uid/website/new', component: _views_website_website_new_website_new_component__WEBPACK_IMPORTED_MODULE_9__["WebsiteNewComponent"], canActivate: [_services_auth_guard_service__WEBPACK_IMPORTED_MODULE_20__["AuthGuard"]] },
@@ -541,11 +541,9 @@ __webpack_require__.r(__webpack_exports__);
 
 var SharedService = /** @class */ (function () {
     function SharedService() {
-        this.user = '';
     }
     SharedService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [])
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])()
     ], SharedService);
     return SharedService;
 }());
@@ -586,9 +584,13 @@ var UserServiceClient = /** @class */ (function () {
         this.router = router;
         this.baseUrl = _environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].baseUrl;
     }
-    UserServiceClient.prototype.createUser = function (user) {
-        var body = { _id: '', username: user.username, password: user.password };
+    /*createUser(user: any) {
+        const body = {_id: '', username: user.username, password: user.password };
         return this.http.post(this.baseUrl + '/api/user', body);
+    }*/
+    UserServiceClient.prototype.createUser = function (user) {
+        var url = this.baseUrl + '/api/user/';
+        return this.http.post(url, user);
     };
     UserServiceClient.prototype.findUserById = function (userId) {
         return this.http.get(this.baseUrl + '/api/user/' + userId);
@@ -610,25 +612,16 @@ var UserServiceClient = /** @class */ (function () {
             username: username,
             password: password
         };
-        return this.http.post(this.baseUrl + '/api/login', body, { withCredentials: true })
-            .map(function (res) {
-            var data = res;
-            return data;
-        });
+        return this.http.post(this.baseUrl + '/api/login', body, { withCredentials: true });
     };
     UserServiceClient.prototype.logout = function () {
-        return this.http.post(this.baseUrl + '/api/logout', '', { withCredentials: true })
-            .map(function (res) {
-            var data = res;
-            return data;
-        });
+        return this.http.post(this.baseUrl + '/api/logout', '', { withCredentials: true });
     };
     UserServiceClient.prototype.loggedIn = function () {
         var _this = this;
         return this.http.post(this.baseUrl + '/api/loggedIn', '', { withCredentials: true })
-            .map(function (res) {
-            var user = res;
-            if (user !== '0') {
+            .map(function (user) {
+            if (user !== 0) {
                 _this.sharedService.user = user; // setting user to share with components
                 return true;
             }
@@ -643,7 +636,8 @@ var UserServiceClient = /** @class */ (function () {
             username: username,
             password: password
         };
-        return this.http.post(this.baseUrl + '/api/register', body, { withCredentials: true }).map(function (res) {
+        return this.http.post(this.baseUrl + '/api/register', body, { withCredentials: true })
+            .map(function (res) {
             var data = res;
             return data;
         });
@@ -679,17 +673,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var WebsiteServiceClient = /** @class */ (function () {
-    /*websites: Website[] = [
-        new Website('1', 'Facebook', '123', 'Lorem'),
-        new Website('2', 'Twitter', '456', 'Lorem'),
-        new Website('3', 'Gizmodo', '234', 'Lorem'),
-        new Website( '4', 'Go', '123', 'Lorem'),
-        new Website( '5', 'Tic Tac Toe', '123', 'Lorem'),
-        new Website( '6', 'Amazon', '345', 'Lorem'),
-        new Website( '7', 'Rent the Runway', '345', 'Lorem'),
-        new Website( '8', 'NOVA', '234', 'Lorem'),
-        new Website( '9', 'History Channel', '456', 'Lorem'),
-    ];*/
     function WebsiteServiceClient(http) {
         this.http = http;
         this.baseUrl = _environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].baseUrl;
@@ -705,7 +688,7 @@ var WebsiteServiceClient = /** @class */ (function () {
         return this.http.get(this.baseUrl + '/api/website/' + websiteId);
     };
     WebsiteServiceClient.prototype.updateWebsite = function (websiteId, website) {
-        var updatedWeb = { _id: website._id, name: website.name, developerId: website.developerId, description: website.description };
+        var updatedWeb = { name: website.name, developerId: website.developerId, description: website.description };
         return this.http.put(this.baseUrl + '/api/website/' + websiteId, updatedWeb);
     };
     WebsiteServiceClient.prototype.deleteWebsite = function (websiteId) {
@@ -718,6 +701,7 @@ var WebsiteServiceClient = /** @class */ (function () {
     return WebsiteServiceClient;
 }());
 
+// _id: website._id,
 
 
 /***/ }),
@@ -1114,7 +1098,7 @@ var LoginComponent = /** @class */ (function () {
                 /**Class additions - we will now be using cached info and won't be displaying user id anymore*/
                 _this.sharedService.user = user;
                 // this.router.navigate(['profile']);
-                _this.router.navigate(['/profile', user._id]);
+                _this.router.navigate(['/profile']);
             }
             else {
                 _this.errorFlag = true;
@@ -1162,7 +1146,7 @@ module.exports = "#profile-blue {\n    padding: 10px;\n    display: inline-block
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<body>\n<header>\n  <div class=\"container-fluid\" id=\"profile-blue\">\n    <h1 id=\"profile-header\">Profile\n      <a routerLink=\"/profile/{{userId}}\">\n        <i class=\"fas fa-check fontawsome_icon\" id=\"check-icon\"></i>\n      </a>\n    </h1>\n  </div>\n</header>\n<br />\n  <div class=\"container-fluid\">\n    <br/>\n    <label>Username</label>\n    <input [(ngModel)]=\"user['username']\" type=\"text\" class=\"form-control\" id=\"username\" placeholder=\"Alice\"/>\n    <br/>\n    <label>Password</label>\n    <input [(ngModel)]=\"user['password']\" type=\"password\" class=\"form-control\" id=\"password\" placeholder=\"password\"/>\n    <br/>\n    <label>First Name</label>\n    <input [(ngModel)]=\"user['firstName']\" class=\"form-control\" id=\"firstName\" placeholder=\"First Name\"/>\n    <br/>\n    <label>Last Name</label>\n    <input [(ngModel)]=\"user['lastName']\" class=\"form-control\" id=\"lastName\" placeholder=\"Last Name\"/>\n    <br/>\n    <label>Email</label>\n    <input [(ngModel)]=\"user['email']\" class=\"form-control\" id=\"email\" placeholder=\"Email\"/>\n    <br/>\n    <a class=\"btn btn-success btn-block\" id=\"update-button\" (click)=\"updateUser()\">Update</a>\n    <a class=\"btn btn-primary btn-block\" routerLink=\"/profile/{{userId}}/website\">Websites</a>\n    <a class=\"btn btn-warning btn-block\" id=\"logout-button\" [routerLink]=\"['/login']\">Logout</a>\n    <br/>\n    <br/>\n    <br/>\n    <br/>\n  </div>\n<footer id=\"blue-footer\">\n    <i class=\"fas fa-user fontawsome_icon\" id=\"user-white\"></i>\n</footer>\n</body>\n"
+module.exports = "<body>\n<header>\n  <div class=\"container-fluid\" id=\"profile-blue\">\n    <h1 id=\"profile-header\">Profile\n      <a routerLink=\"/profile/{{user._id}}\">\n        <i class=\"fas fa-check fontawsome_icon\" id=\"check-icon\"></i>\n      </a>\n    </h1>\n  </div>\n</header>\n<br />\n  <div class=\"container-fluid\">\n    <br/>\n    <label>Username</label>\n    <input [(ngModel)]=\"user['username']\" type=\"text\" class=\"form-control\" id=\"username\" placeholder=\"Alice\"/>\n    <br/>\n    <label>Password</label>\n    <input [(ngModel)]=\"user['password']\" type=\"password\" class=\"form-control\" id=\"password\" placeholder=\"password\"/>\n    <br/>\n    <label>First Name</label>\n    <input [(ngModel)]=\"user['firstName']\" class=\"form-control\" id=\"firstName\" placeholder=\"First Name\"/>\n    <br/>\n    <label>Last Name</label>\n    <input [(ngModel)]=\"user['lastName']\" class=\"form-control\" id=\"lastName\" placeholder=\"Last Name\"/>\n    <br/>\n    <label>Email</label>\n    <input [(ngModel)]=\"user['email']\" class=\"form-control\" id=\"email\" placeholder=\"Email\"/>\n    <br/>\n    <a class=\"btn btn-success btn-block\" id=\"update-button\" (click)=\"updateUser()\">Update</a>\n    <a class=\"btn btn-primary btn-block\" routerLink=\"/profile/{{user._id}}/website\">Websites</a>\n    <a class=\"btn btn-warning btn-block\" id=\"logout-button\" [routerLink]=\"['/login']\">Logout</a>\n    <br/>\n    <br/>\n    <br/>\n    <br/>\n  </div>\n<footer id=\"blue-footer\">\n    <i class=\"fas fa-user fontawsome_icon\" id=\"user-white\"></i>\n</footer>\n</body>\n"
 
 /***/ }),
 
@@ -1179,9 +1163,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _services_user_service_client__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../services/user.service.client */ "./src/app/services/user.service.client.ts");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
-/* harmony import */ var _services_shared_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../services/shared.service */ "./src/app/services/shared.service.ts");
+/* harmony import */ var _models_user_model_client__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../models/user.model.client */ "./src/app/models/user.model.client.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _services_shared_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../services/shared.service */ "./src/app/services/shared.service.ts");
+
 
 
 
@@ -1194,13 +1180,13 @@ var ProfileComponent = /** @class */ (function () {
         this.activatedRoute = activatedRoute;
         this.router = router;
         this.sharedService = sharedService;
-        this.user = {};
-        this.user2 = {};
+        this.user = new _models_user_model_client__WEBPACK_IMPORTED_MODULE_3__["User"]('', '', '', '', '', '');
         this.errorMsg = 'Invalid username or password.';
     }
     ProfileComponent.prototype.updateUser = function () {
         var _this = this;
-        this.userService.updateUser(this.userId, this.user).subscribe(function (data) {
+        this.userService.updateUser(this.user._id, this.user)
+            .subscribe(function (data) {
             _this.user = data;
             console.log(_this.user);
         }, function (error) {
@@ -1215,21 +1201,11 @@ var ProfileComponent = /** @class */ (function () {
         var _this = this;
         return this.userService.logout().subscribe(function (data) {
             _this.router.navigate(['/login']);
+            _this.sharedService.user = null;
         });
     };
     ProfileComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        this.userId = this.sharedService.user['_id'];
-        return this.userService.findUserById(this.userId).subscribe(function (user) {
-            _this.user = user;
-        });
-        /**this.activatedRoute.params.subscribe((params: any) => {this.userId = params.uid; });
-        console.log(this.userId);
-        this.userService.findUserById(this.userId)
-            .subscribe((data: any) => {
-                console.log(data);
-                this.user = data;
-            });*/
+        this.user = this.sharedService.user;
     };
     ProfileComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
@@ -1237,8 +1213,8 @@ var ProfileComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./profile.component.html */ "./src/app/views/user/profile/profile.component.html"),
             styles: [__webpack_require__(/*! ./profile.component.css */ "./src/app/views/user/profile/profile.component.css")]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_services_user_service_client__WEBPACK_IMPORTED_MODULE_2__["UserServiceClient"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"],
-            _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"], _services_shared_service__WEBPACK_IMPORTED_MODULE_5__["SharedService"]])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_services_user_service_client__WEBPACK_IMPORTED_MODULE_2__["UserServiceClient"], _angular_router__WEBPACK_IMPORTED_MODULE_4__["ActivatedRoute"],
+            _angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"], _services_shared_service__WEBPACK_IMPORTED_MODULE_6__["SharedService"]])
     ], ProfileComponent);
     return ProfileComponent;
 }());
@@ -1286,6 +1262,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+/* harmony import */ var _services_shared_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../services/shared.service */ "./src/app/services/shared.service.ts");
+
 
 
 
@@ -1294,9 +1272,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var RegisterComponent = /** @class */ (function () {
-    function RegisterComponent(userService, router) {
+    function RegisterComponent(userService, router, sharedService) {
         this.userService = userService;
         this.router = router;
+        this.sharedService = sharedService;
         this.errorMsg = 'Password and verified password do not match!';
         this.user = new _models_user_model_client__WEBPACK_IMPORTED_MODULE_3__["User"]();
         console.log(this.user);
@@ -1314,23 +1293,12 @@ var RegisterComponent = /** @class */ (function () {
             this.userService.register(this.user.username, this.user.password)
                 .subscribe(function (data) {
                 alert('User registered');
-                _this.router.navigate(['/login']);
+                _this.sharedService.user = data;
+                _this.router.navigate(['/profile']);
             }, function (error) {
                 console.log('error' + error);
             });
         }
-        /**this.user.username = this.registerForm.value.username;
-        console.log(this.user.username);
-        this.user.password = this.registerForm.value.password;
-        this.v_password = this.registerForm.value.v_password;
-        if (this.user.password !== this.v_password) {
-          this.errorFlag = true;
-        } else {
-          this.userService.createUser({username: this.user.username, password: this.user.password}).subscribe((user: User) => {
-            this.user = user;
-            this.router.navigate(['/profile', this.user._id]);
-          });
-        }*/
     };
     RegisterComponent.prototype.ngOnInit = function () {
     };
@@ -1344,7 +1312,7 @@ var RegisterComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./register.component.html */ "./src/app/views/user/register/register.component.html"),
             styles: [__webpack_require__(/*! ./register.component.css */ "./src/app/views/user/register/register.component.css")]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_services_user_service_client__WEBPACK_IMPORTED_MODULE_2__["UserServiceClient"], _angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"]])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_services_user_service_client__WEBPACK_IMPORTED_MODULE_2__["UserServiceClient"], _angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"], _services_shared_service__WEBPACK_IMPORTED_MODULE_7__["SharedService"]])
     ], RegisterComponent);
     return RegisterComponent;
 }());
@@ -2613,7 +2581,7 @@ __webpack_require__.r(__webpack_exports__);
 var environment = {
     production: false,
     baseUrl: 'http://localhost:3200'
-    /**baseUrl: 'https://first-appcs5610.herokuapp.com'*/
+    // baseUrl: 'https://first-appcs5610.herokuapp.com'
 };
 /*
  * For easier debugging in development mode, you can import the following file
