@@ -17,10 +17,15 @@ export class UserServiceClient {
 
     baseUrl = environment.baseUrl;
 
-    createUser(user: any) {
+    /*createUser(user: any) {
         const body = {_id: '', username: user.username, password: user.password };
         return this.http.post(this.baseUrl + '/api/user', body);
+    }*/
+    createUser(user: User) {
+        const url = this.baseUrl + '/api/user/';
+        return this.http.post(url, user);
     }
+
     findUserById(userId: String) {
         return this.http.get(this.baseUrl + '/api/user/' + userId);
     }
@@ -43,25 +48,18 @@ export class UserServiceClient {
             username: username,
             password: password
         };
-        return this.http.post(this.baseUrl + '/api/login', body, { withCredentials: true })
-            .map((res: any) => {
-            const data = res;
-            return data;
-        });
+        return this.http.post(this.baseUrl + '/api/login', body, {withCredentials: true});
     }
+
     logout() {
-        return this.http.post(this.baseUrl + '/api/logout', '', { withCredentials: true })
-            .map((res: any) => {
-            const data = res;
-            return data;
-        });
+        return this.http.post(this.baseUrl + '/api/logout', '', { withCredentials: true });
     }
+
     loggedIn() {
         return this.http.post(this.baseUrl + '/api/loggedIn', '', {withCredentials: true})
             .map(
-                (res: any) => {
-                    const user = res;
-                    if (user !== '0') {
+                (user: any) => {
+                    if (user !== 0) {
                         this.sharedService.user = user; // setting user to share with components
                         return true;
                     } else {
@@ -76,7 +74,8 @@ export class UserServiceClient {
             username : username,
             password : password
         };
-        return this.http.post(this.baseUrl + '/api/register', body, { withCredentials: true }).map((res: any) => {
+        return this.http.post(this.baseUrl + '/api/register', body, { withCredentials: true })
+            .map((res: any) => {
             const data = res;
             return data;
         });

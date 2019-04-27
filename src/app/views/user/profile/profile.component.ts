@@ -12,13 +12,10 @@ import {SharedService} from '../../../services/shared.service';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-  user = {};
+  user: User = new User('', '', '', '', '', '');
   /**all below added for A4*/
   username: String;
-  firstName: String;
-  lastName: String;
   email: String;
-  user2 = {};
   userId: String;
   errorFlag: boolean;
   errorMsg = 'Invalid username or password.';
@@ -26,7 +23,8 @@ export class ProfileComponent implements OnInit {
               private router: Router, private sharedService: SharedService) { }
 
   updateUser() {
-      this.userService.updateUser(this.userId, this.user).subscribe(
+      this.userService.updateUser(this.user._id, this.user)
+          .subscribe(
           (data: any) => {
               this.user = data;
               console.log(this.user);
@@ -45,23 +43,12 @@ export class ProfileComponent implements OnInit {
     logout() {
         return this.userService.logout().subscribe((data: any) => {
                 this.router.navigate(['/login']);
+            this.sharedService.user = null;
             }
         );
     }
   ngOnInit() {
-      this.userId = this.sharedService.user['_id'];
-      return this.userService.findUserById(this.userId).subscribe(
-          (user: User) => {
-          this.user = user;
-          }
-      );
-      /**this.activatedRoute.params.subscribe((params: any) => {this.userId = params.uid; });
-      console.log(this.userId);
-      this.userService.findUserById(this.userId)
-          .subscribe((data: any) => {
-              console.log(data);
-              this.user = data;
-          });*/
+      this.user = this.sharedService.user;
   }
 }
 

@@ -14,15 +14,15 @@ module.exports = pageModel;
 function createPage(webId,page) {
     return pageModel.create(page)
         .then(
-            function (createdPage) {
+            function (page) {
                 websiteModel.findWebsiteById(webId)
                     .then(
                         function (website) {
-                            website.pages.push(createdPage);
+                            website.pages.push(page);
                             websiteModel.updateWebsite(webId,website);
                         }
                     );
-                return createdPage;
+                return page;
             }
         );
 }

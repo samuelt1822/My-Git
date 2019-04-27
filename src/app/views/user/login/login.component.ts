@@ -13,6 +13,7 @@ import {SharedService} from '../../../services/shared.service';
 })
 export class LoginComponent implements OnInit {
   @ViewChild('f') loginForm: NgForm;
+  user: User;
   username: String;
   password: String;
   errorMsg = 'Invalid username or password!';
@@ -34,7 +35,7 @@ export class LoginComponent implements OnInit {
                         /**Class additions - we will now be using cached info and won't be displaying user id anymore*/
                         this.sharedService.user = user;
                         // this.router.navigate(['profile']);
-                        this.router.navigate(['/profile', user._id]);
+                        this.router.navigate(['/profile']);
                     } else {
                         this.errorFlag = true;
                     }

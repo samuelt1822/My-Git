@@ -47,20 +47,10 @@ module.exports = function (app) {
                 });
     }
 
-    function simpleFindWidgetsForPage(pageId){
-        var pageWidgets = [];
-        for(var i in widgets){
-            if(widgets[i].pageId === pageId){
-                pageWidgets.push(widgets[i]);
-            }
-        }
-        return pageWidgets;
-    }
 
     function findWidgetsForPage (req, res) {
         const pageId = req.params['pageId'];
-        /*var widgetList = simpleFindWidgetsForPage(pageId);
-        res.json(widgetList);*/
+
         widgetModel.findAllWidgetsForPage(pageId)
             .then(
                 function (widget) {
@@ -73,13 +63,7 @@ module.exports = function (app) {
 
     function findWidgetById (req, res) {
         const widgetId = req.params['widgetId'];
-        /*for(var i in widgets){
-            if(widgets[i]._id === widgetId) {
-                res.json(widgets[i]);
-                return;
-            }
-        }
-        res.send();*/
+
         widgetModel.findWidgetById(widgetId)
             .then(
                 function(widget) {
@@ -100,36 +84,7 @@ module.exports = function (app) {
                     res.status(404).send(error);
             });
     }
-        /*for (var i in widgets) {
-            if (widgets[i]._id === widgetId) {
-                widgets[i].name = widget['name'];
-                widgets[i].text = widget['text'];
-                switch (widget['widgetType']) {
-                    case 'HEADER':
-                        widgets[i].size = widget['size'];
-                        res.json(widgets[i]);
-                        return;
 
-                    case 'IMAGE':
-                        widgets[i].url = widget['url'];
-                        widgets[i].width = widget['width'];
-                        res.json(widgets[i]);
-                        return;
-
-                    case 'YOUTUBE':
-                        widgets[i].url = widget['url'];
-                        widgets[i].width = widget['width'];
-                        res.json(widgets[i]);
-                        return;
-                    case 'HTML':
-                        widgets[i].url = widget['size'];
-                        res.json(widgets[i]);
-                        return;
-                }
-                res.send();
-            }
-        }
-    }*/
     function getWidgetById(widgetId){
         for(var i in widgets){
             if(widgets[i]._id === widgetId) {
@@ -139,17 +94,7 @@ module.exports = function (app) {
     }
     function deleteWidget(req, res) {
         var widgetId = req.params['widgetId'];
-        /*var widget = getWidgetById(widgetId);
-        var pageId = widget['pageId'];
-        for (const i in widgets) {
-            if (widgets[i]._id === widgetId) {
-                const j = + i;
-                widgets.splice(j, 1);
-                var allWidgets = simpleFindWidgetsForPage(pageId);
-                res.json(allWidgets);
-            }
-        }
-        res.json();*/
+
         widgetModel.deleteWidget(widgetId)
             .then(
                 function (widget) {
@@ -163,19 +108,7 @@ module.exports = function (app) {
         var startIndex = parseInt(req.query["initial"]);
         var endIndex = parseInt(req.query["final"]);
         var pageId = req.params.pageId;
-        /*if(endIndex > startIndex){
-            var index =  widgets[startIndex];
-            for(var i = startIndex; i < endIndex; i++){
-                widgets[i] = widgets[i+1];
-            }
-            widgets[endIndex] = index;
-        }else{
-            index = widgets[startIndex];
-            for(var i = startIndex; i > endIndex; i--){
-                widgets[i] = widgets[i-1];
-            }
-            widgets[endIndex] = index;
-        }*/
+
         widgetModel.reorderWidget(pageId, startIndex, endIndex)
             .then(
                 function(page) {

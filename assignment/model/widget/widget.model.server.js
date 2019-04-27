@@ -19,9 +19,11 @@ module.exports = widgetModel;
 
 function createWidget(pageId,widget) {
     return widgetModel.create(widget)
-        .then(function (widget) {
+        .then(
+            function (widget) {
             pageModel.findPageById(pageId)
-                .then(function (page) {
+                .then(
+                    function (page) {
                     widget.position = page.widgets.length;
                     page.widgets.push(widget);
                     page.save();
@@ -44,9 +46,6 @@ function updateWidget(widgetId, widget) {
 
 function deleteWidget(widgetId) {
     return widgetModel.findByIdAndDelete(widgetId);
-}
-
-function updatePosition (pageId, position) {
 }
 
 function reorderWidget(pageId,start,end) {

@@ -4,6 +4,7 @@ import {User} from '../../../models/user.model.client';
 import {Router} from '@angular/router';
 import 'rxjs';
 import {NgForm} from '@angular/forms';
+import {SharedService} from '../../../services/shared.service';
 
 
 @Component({
@@ -18,7 +19,7 @@ export class RegisterComponent implements OnInit {
   errorMsg = 'Password and verified password do not match!';
   v_password: String;
 
-  constructor(private userService: UserServiceClient, private router: Router) {
+  constructor(private userService: UserServiceClient, private router: Router, private sharedService: SharedService) {
     this.user = new User();
     console.log(this.user);
   }
@@ -33,24 +34,12 @@ export class RegisterComponent implements OnInit {
       this.userService.register(this.user.username, this.user.password)
           .subscribe((data: any) => {
         alert('User registered');
-        this.router.navigate(['/login']);
+        this.sharedService.user = data;
+        this.router.navigate(['/profile']);
       }, (error: any) => {
             console.log('error' + error);
           });
     }
-    /**this.user.username = this.registerForm.value.username;
-    console.log(this.user.username);
-    this.user.password = this.registerForm.value.password;
-    this.v_password = this.registerForm.value.v_password;
-    if (this.user.password !== this.v_password) {
-      this.errorFlag = true;
-    } else {
-      this.userService.createUser({username: this.user.username, password: this.user.password}).subscribe((user: User) => {
-        this.user = user;
-        this.router.navigate(['/profile', this.user._id]);
-      });
-    }*/
-
   }
   ngOnInit() {
   }
