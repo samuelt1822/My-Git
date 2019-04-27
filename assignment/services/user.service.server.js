@@ -93,7 +93,24 @@ module.exports = function (app) {
         return;
     }
 
-    function register(req, res) {
+    function register (req, res) {
+        var user = req.body;
+        user.password = bcrypt.hashSync(user.password);
+        userModel.createUser(user).then(
+            function(user){
+                if(user){
+                    req.login(user, function(err) {
+                        if(err) {
+                            res.status(400).send(err);
+                        } else {
+                            res.json(user);
+                        }
+                    });
+                }
+            });
+    }
+
+    /*function register(req, res) {
         var user = req.body;
         user.password = bcrypt.hashSync(user.password);
         userModel.findUserByUsername(user.username).then(function (data) {
@@ -117,7 +134,7 @@ module.exports = function (app) {
             }
         })
 
-    }
+    }*/
 
     function loggedIn(req, res) {
         res.send(req.isAuthenticated() ? req.user : '0');
@@ -162,7 +179,7 @@ module.exports = function (app) {
             return;
         }
         res.send({});*/
-        userModel.findById(userId)
+        userModel.findUserById(userId)
             .then(
                 function(user){
 
